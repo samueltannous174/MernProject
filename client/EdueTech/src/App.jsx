@@ -1,12 +1,22 @@
-import './App.css'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import TopicsSection from './components/Lists/TopicCards'
-import VideosSection from './components/Lists/VideoCards'
-import VideoPlayer from './components/Lists/VideoPage'
-import ShowCalender from './components/Calender/ShowCalender'
-import LearningAnalyticsDashboard from './components/Charts/LearningAnalyticsDashboard'
 
-function App() {
+
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import Home from "./components/Home";
+import AuthForm from "./components/AuthForm";
+import Dashboard from "./components/Dashboard";
+import ShowCalender from "./components/Calender/ShowCalender";
+import LearningAnalyticsDashboard from "./components/Charts/LearningAnalyticsDashboard";
+import TopicsSection from "./components/Lists/TopicCards";
+import VideosSection from "./components/Lists/VideoCards";
+import VideoPlayer from "./components/Lists/VideoPage";
+
+
+
+
+export default function App() {
+  const [user, setUser] = useState(null);
 
   const videos = [
     {
@@ -24,17 +34,19 @@ function App() {
   ];
 
   return (
-    <BrowserRouter>
+    <Router>
+      <NavBar user={user} />
       <Routes>
-        <Route path="/" element={<div className="text-3xl font-bold underline">Home</div>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<AuthForm />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/topics" element={<TopicsSection />} />
         <Route path="/videos" element={<VideosSection />} />
         <Route path="/watch/:id" element={<VideoPlayer videos={videos} />} />
         <Route path="/calendar" element={<ShowCalender />} />
         <Route path="/charts" element={<LearningAnalyticsDashboard />} />
       </Routes> 
-    </BrowserRouter>
+    </Router>
   )
 }
 
-export default App
