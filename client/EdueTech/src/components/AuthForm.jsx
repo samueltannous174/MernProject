@@ -2,7 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import HeroGif from "../assets/hero.gif"; // make sure the path is correct
+import HeroGif from "../assets/hero.gif"; 
 
 export default function AuthForm({ setUser }) {
   const navigate = useNavigate();
@@ -45,7 +45,6 @@ export default function AuthForm({ setUser }) {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
-      {/* Hero Image as background */}
       <img
         src={HeroGif}
         alt="Learning Platform"
