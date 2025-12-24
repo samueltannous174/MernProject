@@ -80,7 +80,7 @@ export default function AuthForm({ setUser }) {
             )}
             <input type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"/>
             <input type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} required className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"/>
-            <button className="w-full py-3 bg-blue-400 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">{isLogin ? "Login" : "Register"}</button>
+            <button className="w-full py-3 bg-gradient-to-r from-blue-500 to-green-300 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">{isLogin ? "Login" : "Register"}</button>
           </form>
 
           <p className="mt-6 text-center text-black">

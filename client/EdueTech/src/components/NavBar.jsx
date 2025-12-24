@@ -5,12 +5,7 @@ import HeroGif from "../assets/hero.gif"; // adjust path if needed
 export default function NavBar({ user }) {
   return (
     <nav   className="bg-gray-900">
-      {/* Hero Image */}
-      {/* <img
-        src={HeroGif}
-        alt="Learning Platform"
-        className="absolute inset-0 w-full h-20 "
-      /> */}
+    
 
       
 
@@ -25,7 +20,7 @@ export default function NavBar({ user }) {
         {!user ? (
           <Link
             to="/auth"
-            className="px-5 py-2 border border-white text-white rounded-lg font-semibold hover:bg-white hover:text-black transition"
+            className="px-5 py-2 border border-white text-white rounded-lg font-semibold hover:bg-white hover:text-black transition bg-gradient-to-r from-blue-500 to-green-300"
           >
             Login / Register
           </Link>

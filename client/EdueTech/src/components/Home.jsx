@@ -26,7 +26,7 @@ export default function Home() {
           </p>
           <button
             onClick={() => navigate("/auth")}
-            className="px-6 py-3 bg-blue-600 rounded hover:bg-blue-700 transition"
+            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-green-300 hover:bg-blue-700 transition"
           >
             GET STARTED
           </button>
