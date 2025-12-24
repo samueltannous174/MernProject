@@ -4,6 +4,7 @@ import TopicsSection from './components/Lists/TopicCards'
 import VideosSection from './components/Lists/VideoCards'
 import VideoPlayer from './components/Lists/VideoPage'
 import ShowCalender from './components/Calender/ShowCalender'
+import LearningAnalyticsDashboard from './components/Charts/LearningAnalyticsDashboard'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/videos" element={<VideosSection />} />
         <Route path="/watch/:id" element={<VideoPlayer videos={videos} />} />
         <Route path="/calendar" element={<ShowCalender />} />
+        <Route path="/charts" element={<LearningAnalyticsDashboard />} />
       </Routes> 
     </BrowserRouter>
   )
