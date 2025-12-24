@@ -1,14 +1,17 @@
+const mongoose = require("mongoose");
+require("dotenv").config();
 
+const connectDB = async () => {
+  try {
+    const uri = `mongodb+srv://${process.env.MONGODB_NAME}:${process.env.MONGODB_PASS}@${process.env.MONGODB_CLUSTER}/${process.env.MONGODB_DB}?retryWrites=true&w=majority`;
 
-const mongoose = require('mongoose');
+    const conn = await mongoose.connect(uri);
 
-const db = process.env.DB; 
-const username = process.env.ATLAS_USERNAME; 
-const password = process.env.ATLAS_PASSWORD; 
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    process.exit(1);
+  }
+};
 
-// Include the database name in the URI
-const uri = `mongodb+srv://${username}:${password}@cluster0.zboyd4e.mongodb.net/?appName=Cluster0`;
-
-mongoose.connect(uri)
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch(err => console.error("Failed to connect to MongoDB", err));
+module.exports = connectDB;

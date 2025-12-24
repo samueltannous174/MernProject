@@ -26,12 +26,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-800 scroll-smooth">
+    <div className="relative  h-screen overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-800 scroll-smooth">
       <div className="relative w-full h-screen">
         <img
           src={HeroGif}
           alt="Learning Platform"
-          className="w-full h-full object-cover"
+          className=" h-full object-cover"
         />
         <div className="absolute inset-0 flex items-center justify-start pl-16 text-left text-white">
           <div className="space-y-6 animate-slide-in-left">
@@ -82,7 +82,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Tailwind Animations */}
       <style>
         {`
           @keyframes slide-in-left {
