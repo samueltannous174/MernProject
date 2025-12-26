@@ -2,6 +2,12 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import HeroGif from "../assets/hero.gif";
+import CSS from "../assets/a1.gif";
+import JS from "../assets/JS.gif";
+import Python from "../assets/python.gif";
+import React from "../assets/reactjs.gif";
+import HTML from "../assets/HTML.gif";
+import ReactBig from "../assets/REACTB.gif";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -53,7 +59,105 @@ export default function Home() {
 
       <div className="relative z-10 bg-gray-900 text-white py-20">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-6 fade-on-scroll">
+            <div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
+ 
+
+  
+  <img
+    src={HTML}
+    onClick={() => navigate("/auth")}
+    alt="Login to watch video"
+    className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+  />
+  
+
+  <p className="text-lg">
+    HTML BEGINNER
+  </p>
+</div>
+<div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
+ 
+
+  {/* <iframe
+    className="w-full h-48 rounded-xl shadow-lg"
+    src="https://www.youtube.com/embed/VIDEO_ID_2"
+    title="Purpose Video"
+    allowFullScreen
+  /> */}
+  <img
+    src={CSS}
+    onClick={() => navigate("/auth")}
+    alt="Login to watch video"
+    className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+  />
+
+  <p className="text-lg">
+    CSS BEGINNER
+  </p>
+</div>
+<div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
+ 
+
+  
+  <img
+    src={JS}
+    onClick={() => navigate("/auth")}
+    alt="Login to watch video"
+    className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+  />
+
+  <p className="text-lg">
+    JAVASCRIPT BEGINNER
+  </p>
+</div>
+<div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
+ 
+
+  
+  <img
+    src={ReactBig}
+    onClick={() => navigate("/auth")}
+    alt="Login to watch video"
+    className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+  />
+
+  <p className="text-lg">
+    REACT BEGINNER
+  </p>
+</div>
+<div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
+ 
+
+  
+  <img
+    src={Python}
+    onClick={() => navigate("/auth")}
+    alt="Login to watch video"
+    className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+  />
+
+  <p className="text-lg">
+    PYTHON BEGINNER
+  </p>
+</div>
+<div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
+ 
+
+  
+  <img
+    src={React}
+    onClick={() => navigate("/auth")}
+    alt="Login to watch video"
+    className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+  />
+
+  <p className="text-lg">
+    REACT ADVANCE
+  </p>
+</div>
+
           <div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
+            
             <div className="text-6xl">✨</div>
             <h2 className="text-2xl font-bold">Features</h2>
             <ul className="space-y-2 text-lg">
@@ -64,7 +168,10 @@ export default function Home() {
             </ul>
           </div>
 
+          
+
           <div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
+            
             <div className="text-6xl">🌟</div>
             <h2 className="text-2xl font-bold">Purpose</h2>
             <p className="text-lg">
@@ -80,6 +187,8 @@ export default function Home() {
             </p>
           </div>
         </div>
+
+        
       </div>
 
       {/* Tailwind Animations */}
