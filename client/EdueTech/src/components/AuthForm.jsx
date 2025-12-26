@@ -2,8 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HeroGif from "../assets/hero.gif";
+import { UserContext } from "../context/context.jsx";
 
-export default function AuthForm({ setUser }) {
+
+export default function AuthForm() {
+  const { loginUser } = useContext(UserContext);
+
 
   const navigate = useNavigate();
 
@@ -43,7 +47,6 @@ export default function AuthForm({ setUser }) {
       ? "http://localhost:8000/login"
       : "http://localhost:8000/register";
 
-    // send only relevant fields
     const payload = isLogin
       ? {
         email: formData.email,
@@ -57,19 +60,20 @@ export default function AuthForm({ setUser }) {
       setIsError(false);
       setMessage(res.data.message || "");
 
-      // store token when provided
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
 
-      // backend returns user → set it
-      if (res.data.user) {
-        setUser(res.data.user);
+      if (res.data.user && res.data.token) {
+        loginUser(res.data.user, res.data.token);
       }
+
 
       navigate("/dashboard");
 
     } catch (err) {
+      console.log(err);
+      
       setIsError(true);
       setMessage(
         err.response?.data?.message ||

@@ -1,31 +1,39 @@
+import { useEffect, useState } from "react";
 import ListContainer from "./ListContainer";
 import TopicCard from "./TopicCard";
 
-const topics = [
-    {
-        id: 1,
-        title: "Full Stack Development",
-        description: "Master React, Node.js, and Express",
-        progress: 45,
-        color: "from-purple-500 to-indigo-500",
-    },
-    {
-        id: 2,
-        title: "Advanced React",
-        description: "Hooks, Context, and Performance",
-        progress: 30,
-        color: "from-blue-500 to-cyan-500",
-    },
-];
-
 const TopicsCards = () => {
+    const [topics, setTopics] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTopics = async () => {
+            try {
+                const res = await fetch("http://localhost:8000/getTopics");
+                const data = await res.json();
+                setTopics(data);
+                console.log(data);
+            } catch (err) {
+                console.error("Failed to fetch topics:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+
+        fetchTopics();
+    }, []);
+    console.log(topics);
+
+    if (loading) return <p>Loading topics...</p>;
+
     return (
         <ListContainer
             title="My Topics"
             subtitle="Track your learning progress"
             items={topics}
             renderCard={(topic) => (
-                <TopicCard key={topic.id} topic={topic} />
+                <TopicCard key={topic._id} topic={topic} />
             )}
         />
     );

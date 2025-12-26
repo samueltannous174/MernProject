@@ -11,12 +11,18 @@ import LearningAnalyticsDashboard from "./components/Charts/LearningAnalyticsDas
 import TopicsSection from "./components/Lists/TopicCards";
 import VideosSection from "./components/Lists/VideoCards";
 import VideoPlayer from "./components/Lists/VideoPage";
+import { useContext } from "react";
+import { UserContext } from "./context/context.jsx";
+import DraftEditor from "./components/Editor/DraftEditor";
+import ViewTopicPage from "./components/Editor/ViewTopicPage";
+import Chat from "./components/Ai/Chat";
+
 
 
 
 
 export default function App() {
-  const [user, setUser] = useState(null);
+
 
   const videos = [
     {
@@ -32,6 +38,7 @@ export default function App() {
       category: "Express & APIs",
     },
   ];
+  const { user } = useContext(UserContext);
 
   return (
     <Router>
@@ -45,6 +52,9 @@ export default function App() {
         <Route path="/watch/:id" element={<VideoPlayer videos={videos} />} />
         <Route path="/calendar" element={<ShowCalender />} />
         <Route path="/charts" element={<LearningAnalyticsDashboard />} />
+        <Route path="/editor" element={<DraftEditor />} />
+        <Route path="/topics/:id" element={<ViewTopicPage />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes> 
     </Router>
   )
