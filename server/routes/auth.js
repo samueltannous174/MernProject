@@ -1,18 +1,9 @@
-// const express = require('express');
-// const router = express.Router();
-// const authController = require('../controllers/authController');
+import express from "express";
+import { register, login } from "../controllers/authController.js";
 
-// router.post('/register', authController.register);
-// router.post('/login', authController.login);
-
-// module.exports = router;
-const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
 
-router.post('/register', authController.register);
-router.post('/login', authController.login);
+router.post("/register", register);
+router.post("/login", login);
 
-module.exports = router;
-
-
+export default router; // ✅ default export
