@@ -1,131 +1,87 @@
+const User = require('../models/User');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
-// const User = require('../models/User');
-
-// exports.register = async (req, res) => {
-//   try {
-//     const { first_name, last_name, email, password } = req.body || {};
-//     if (!first_name || !last_name || !email || !password)
-//       return res.status(400).json({ error: 'All fields are required' });
-
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) return res.status(400).json({ error: 'Email already registered' });
-
-//     const user = new User({ first_name, last_name, email, password_hash: password });
-//     await user.save();
-
-//     res.status(201).json({ message: 'User registered successfully', user });
-//   } catch (err) {
-//     console.error('REGISTER ERROR:', err);
-//     res.status(500).json({ error: 'Something went wrong!' });
-//   }
-// };
-
-// exports.login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body || {};
-//     if (!email || !password)
-//       return res.status(400).json({ error: 'Email and password required' });
-
-//     const user = await User.findOne({ email });
-//     if (!user) return res.status(401).json({ error: 'Invalid credentials' });
-
-//     const isMatch = await user.comparePassword(password);
-//     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
-
-//     res.status(200).json({ message: 'Login successful', user });
-//   } catch (err) {
-//     console.error('LOGIN ERROR:', err);
-//     res.status(500).json({ error: 'Something went wrong!' });
-//   }
-// };
-
-import User from "../models/User.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-
-/* ================= REGISTER ================= */
-export const register = async (req, res) => {
+exports.register = async (req, res) => {
   try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ error: "Request body is empty" });
-    }
-    console.log("Request body:", req.body);
-
-    const { first_name, last_name, email, password } = req.body;
-
-    if (!first_name || !last_name || !email || !password) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
+    const { first_name, last_name, email, password } = req.body || {};
+    if (!first_name || !last_name || !email || !password)
+      return res.status(400).json({ error: 'All fields are required' });
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ error: "Email already exists" });
+      return res.status(400).json({ message: "User already exists" });
     }
-
+    console.log("User does not exist");
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await User.create({
-      first_name,
-      last_name,
+    console.log("Password hashed");
+    const newUser = new User({
+      firstName,
+      lastName,
       email,
-      password_hash: hashedPassword, // Match your User model
+      password: hashedPassword
+    });
+    console.log("User created");
+    await newUser.save();
+    console.log("User saved");
+    res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        id: newUser._id,
+        firstName,
+        lastName,
+        email
+      }
     });
 
-    res.status(201).json({
-      message: "Registration successful",
-      user: {
-        id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-      },
-    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
+    console.log(error);
+    console.log("Server error");
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
 /* ================= LOGIN ================= */
 export const login = async (req, res) => {
   try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ error: "Request body is empty" });
-    }
-
     const { email, password } = req.body;
+
     if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ error: "Invalid email or password" });
-    }
+    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
-    const isMatch = await bcrypt.compare(password, user.password_hash); // Use password_hash
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ error: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
+    
+    const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_key";
 
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      JWT_SECRET,
+      { expiresIn: "1h" }
     );
 
-    res.json({
+
+    res.status(200).json({
       message: "Login successful",
+      token,
       user: {
         id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-      },
-      token,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      }
     });
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
+    console.log(error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
