@@ -4,9 +4,9 @@ const cors = require("cors")
 
 const app = express();
 const port = 8000;
-app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 connectDB();
 
@@ -15,7 +15,13 @@ const router = require("./routes/route.js");
 router(app);
 
 const authRoutes = require("./routes/authRoutes");
-app.use( authRoutes);
+app.use(authRoutes);
+
+const aiRoutes = require("./routes/aiRoutes");
+app.use(aiRoutes);
+
+const topicRoutes = require("./routes/topicRoutes");
+app.use(topicRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
