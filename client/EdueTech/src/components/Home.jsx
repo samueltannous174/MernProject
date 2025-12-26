@@ -78,11 +78,11 @@ export default function Home() {
 <div className="flex flex-col items-center text-center space-y-4 animate-fade-in-up">
  
 
-  {/* <iframe
+ {/* <iframe
     className="w-full h-48 rounded-xl shadow-lg"
     src="https://www.youtube.com/embed/VIDEO_ID_2"
     title="Purpose Video"
-    allowFullScreen
+    all owFullScreen
   /> */}
   <img
     src={CSS}
@@ -186,7 +186,14 @@ export default function Home() {
               Many beginners struggle to find structured guidance and interactive projects. EduTech provides a step-by-step path to learn coding effectively.
             </p>
           </div>
+          
         </div>
+        <iframe
+    className="w-full h-48 rounded-xl shadow-lg"
+    src="https://www.youtube.com/embed/VIDEO_ID_2"
+    title="Purpose Video"
+    all owFullScreen
+  />
 
         
       </div>
