@@ -4,9 +4,9 @@ require("dotenv").config();
 exports.chat = async (req, res) => {
     
   try {
-    let { topic, messages } = req.body;
+    let { title, messages } = req.body;
 
-    if (topic) {
+    if (title) {
       messages = [
         {
           role: "system",
@@ -18,7 +18,7 @@ exports.chat = async (req, res) => {
           content: `
 Generate a learning roadmap for this programming topic:
 
-Topic: ${topic}
+Topic: ${title}
 
 FORMAT RULES (IMPORTANT):
 - Use ONLY the sections shown below
@@ -117,23 +117,23 @@ const AiTopic = require("../models/AiTopic");
 
 exports.createAiTopic = async (req, res) => {
   try {
-const { user, topic, learningPath, videos, mistakes, fullResponse, mainImage } = req.body;
+const { user, title, learningPath, videos, mistakes, fullResponse, mainImage } = req.body;
 
 
     // console.log(req.body);
     console.log(req.body);
 
 
-    if (!user || !topic) {
+    if (!user || !title) {
       return res.status(400).json({
-        message: "user and topic are required"
+        message: "user and title are required"
       });
     }
 
 
     const doc = await AiTopic.create({
       user,
-      topic,
+      title,
       learningPath,
       videos,
       mistakes,

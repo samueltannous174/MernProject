@@ -7,7 +7,7 @@ import { UserContext } from "../../context/context";
 import ReactMarkdown from "react-markdown";
 
 export default function Chat() {
-    const [topic, setTopic] = useState("");
+    const [title, setTitle] = useState("");
     const [reply, setReply] = useState("");
 
     const [path, setPath] = useState([]);
@@ -40,7 +40,7 @@ export default function Chat() {
         try {
             const payload = {
                 user: user.id,  
-                topic,
+                title,
                 mainImage,
                 learningPath: path,
                 videos,
@@ -121,7 +121,7 @@ export default function Chat() {
     };
 
     const sendMessage = async () => {
-        if (!topic.trim()) {
+        if (!title.trim()) {
             setReply("Please enter a topic first.");
             return;
         }
@@ -135,7 +135,7 @@ export default function Chat() {
             setPath([]);
             setMainImage("");
 
-            const res = await axios.post("http://localhost:8000/chat", { topic });
+            const res = await axios.post("http://localhost:8000/chat", { title });
 
             const text =
                 res.data?.choices?.[0]?.message?.content ||
@@ -179,8 +179,8 @@ export default function Chat() {
                 }}
             >
                 <input
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     placeholder="Enter a topic — e.g., Frontend Roadmap, React Hooks, Java OOP"
                     style={{
                         width: "100%",

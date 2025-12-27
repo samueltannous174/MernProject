@@ -1,7 +1,6 @@
 
 
-import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import AuthForm from "./components/AuthForm";
@@ -9,8 +8,6 @@ import Dashboard from "./components/Dashboard";
 import ShowCalender from "./components/Calender/ShowCalender";
 import LearningAnalyticsDashboard from "./components/Charts/LearningAnalyticsDashboard";
 import TopicsSection from "./components/Lists/TopicCards";
-import VideosSection from "./components/Lists/VideoCards";
-import VideoPlayer from "./components/Lists/VideoPage";
 import { useContext } from "react";
 import { UserContext } from "./context/context.jsx";
 import DraftEditor from "./components/Editor/DraftEditor";
@@ -18,6 +15,8 @@ import ViewTopicPage from "./components/Editor/ViewTopicPage";
 import Chat from "./components/Ai/Chat";
 import UserTopics from "./components/Ai/UserTopics";
 import TopicDetails from "./components/Ai/TopicDetails";
+import ProtectedRoute from "./context/ProtectedRoutes";
+import GuestRoute from "./context/GuestRoute";
 
 
 
@@ -26,20 +25,6 @@ import TopicDetails from "./components/Ai/TopicDetails";
 export default function App() {
 
 
-  const videos = [
-    {
-      id: 1,
-      title: "React Hooks Explained",
-      youtubeUrl: "https://www.youtube.com/watch?v=f687hBjwFcM",
-      category: "Advanced React",
-    },
-    {
-      id: 2,
-      title: "Building RESTful APIs with Express",
-      youtubeUrl: "https://www.youtube.com/watch?v=pKd0Rpw7O48",
-      category: "Express & APIs",
-    },
-  ];
   const { user } = useContext(UserContext);
 
   return (
@@ -47,18 +32,16 @@ export default function App() {
       <NavBar user={user} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<AuthForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/topics" element={<TopicsSection />} />
-        <Route path="/videos" element={<VideosSection />} />
-        <Route path="/watch/:id" element={<VideoPlayer videos={videos} />} />
-        <Route path="/calendar" element={<ShowCalender />} />
-        <Route path="/charts" element={<LearningAnalyticsDashboard />} />
-        <Route path="/editor" element={<DraftEditor />} />
-        <Route path="/topics/:id" element={<ViewTopicPage />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/my-topics" element={<UserTopics />} />
-        <Route path="/topic/:id" element={<TopicDetails />} />
+        <Route path="/auth" element={<GuestRoute><AuthForm /></GuestRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/topics" element={ <ProtectedRoute><TopicsSection /></ProtectedRoute>} />
+        <Route path="/calendar" element={ <ProtectedRoute><ShowCalender /></ProtectedRoute>} />
+        <Route path="/charts" element={<ProtectedRoute><LearningAnalyticsDashboard /></ProtectedRoute>} />
+        <Route path="/editor" element={<ProtectedRoute><DraftEditor /></ProtectedRoute>} />
+        <Route path="/topics/:id" element={<ProtectedRoute><ViewTopicPage /></ProtectedRoute>} />
+        <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+        <Route path="/my-topics" element={<ProtectedRoute><UserTopics /></ProtectedRoute>} />
+        <Route path="/topic/:id" element={<ProtectedRoute><TopicDetails /></ProtectedRoute>} />
 
       </Routes> 
     </Router>

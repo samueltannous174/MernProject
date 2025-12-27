@@ -7,8 +7,8 @@ const AiTopicSchema = new mongoose.Schema({
     required: true
   },
 
-  topic: { type: String, required: true },
-  
+  title: { type: String, required: true },
+
   mainImage: { type: String },
 
   learningPath: [String],

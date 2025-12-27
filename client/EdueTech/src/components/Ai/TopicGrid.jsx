@@ -37,13 +37,12 @@ export default function TopicGrid({ topics, label }) {
                             />
                         )}
 
-                        <h3>{t.topic}</h3>
+                        <h3>{t.title}</h3>
 
                         <div style={{ fontSize: 12, color: "#666" }}>
                             {new Date(t.createdAt).toLocaleString()}
                         </div>
 
-                        {/* ONLY show for enrolled topics */}
                         {label === "Enrolled" && (
                             <div style={{ marginTop: 6, color: "#16a34a" }}>
                                 ✔ Enrolled
