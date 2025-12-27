@@ -16,6 +16,8 @@ import { UserContext } from "./context/context.jsx";
 import DraftEditor from "./components/Editor/DraftEditor";
 import ViewTopicPage from "./components/Editor/ViewTopicPage";
 import Chat from "./components/Ai/Chat";
+import UserTopics from "./components/Ai/UserTopics";
+import TopicDetails from "./components/Ai/TopicDetails";
 
 
 
@@ -55,6 +57,9 @@ export default function App() {
         <Route path="/editor" element={<DraftEditor />} />
         <Route path="/topics/:id" element={<ViewTopicPage />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/my-topics" element={<UserTopics />} />
+        <Route path="/topic/:id" element={<TopicDetails />} />
+
       </Routes> 
     </Router>
   )

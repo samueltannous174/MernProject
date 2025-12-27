@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HeroGif from "../assets/hero.gif";
 import { UserContext } from "../context/context.jsx";
+import { useContext } from "react";
 
 
 export default function AuthForm() {

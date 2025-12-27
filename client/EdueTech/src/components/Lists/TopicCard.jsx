@@ -1,58 +1,108 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/context";
 
 const TopicCard = ({ topic }) => {
-    return (
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+    const { user } = useContext(UserContext);
+    const [enrolling, setEnrolling] = useState(false);
+    const [isEnrolled, setIsEnrolled] = useState(
+        topic.users?.includes(user?.id) // mark enrolled if already inside array
+    );
 
-            {topic.mainImage ? (
+    const handleEnroll = async () => {
+        if (!user) {
+            alert("Please login to enroll in this topic");
+            return;
+        }
+
+        try {
+            setEnrolling(true);
+
+            const res = await fetch(
+                `http://localhost:8000/addUserToTopic/${topic._id}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ userId: user.id })
+                }
+            );
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error(data);
+                alert(data.message || "Failed to enroll");
+                return;
+            }
+
+            setIsEnrolled(true);
+
+        } catch (err) {
+            console.error("Enroll failed:", err);
+        } finally {
+            setEnrolling(false);
+        }
+    };
+
+    return (
+        <div
+            style={{
+                background: "#fff",
+                borderRadius: 12,
+                padding: 14,
+                border: "1px solid #e5e5e5",
+                boxShadow: "0 6px 14px rgba(0,0,0,.06)"
+            }}
+        >
+            {topic.mainImage && (
                 <img
                     src={topic.mainImage}
-                    alt={topic.title}
-                    className="h-52 w-full object-cover"
+                    alt={topic.title || topic.topic}
+                    style={{
+                        width: "100%",
+                        height: "160px",
+                        objectFit: "cover",
+                        borderRadius: 8,
+                        marginBottom: 12
+                    }}
                 />
-            ) : (
-                <div
-                    className={`h-52 flex items-center justify-center bg-gradient-to-r ${topic.color}`}
-                >
-                    <div className="w-12 h-12 border-2 border-white rounded-md" />
-                </div>
             )}
 
-            <div className="p-5 space-y-3">
+            <h3>{topic.title || topic.topic}</h3>
 
-                <h3 className="text-lg font-semibold">
-                    {topic.title || "Untitled Topic"}
-                </h3>
-
-                {topic.description && (
-                    <p className="text-sm text-gray-500">
-                        {topic.description}
-                    </p>
-                )}
-
-                {/* keep progress UI if you use it */}
-                {topic.progress !== undefined && (
-                    <>
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-500">Progress</span>
-                            <span className="font-semibold">{topic.progress}%</span>
-                        </div>
-
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div
-                                className="h-2 rounded-full bg-purple-600"
-                                style={{ width: `${topic.progress}%` }}
-                            />
-                        </div>
-                    </>
-                )}
-
-                <button className="text-purple-600 font-semibold">
-                    <Link to={`/topics/${topic._id}`}>
-                        Continue Learning →
-                    </Link>
+            {isEnrolled ? (
+                <button
+                    disabled
+                    style={{
+                        marginTop: 10,
+                        padding: "8px 14px",
+                        borderRadius: 8,
+                        border: "none",
+                        background: "#16a34a",
+                        color: "white"
+                    }}
+                >
+                    ✔ Enrolled
                 </button>
-            </div>
+            ) : (
+                <button
+                    onClick={handleEnroll}
+                    disabled={enrolling}
+                    style={{
+                        marginTop: 10,
+                        padding: "8px 14px",
+                        borderRadius: 8,
+                        border: "none",
+                        background: "#2563eb",
+                        color: "white",
+                        cursor: "pointer"
+                    }}
+                >
+                    {enrolling ? "Enrolling…" : "Enroll"}
+                </button>
+            )}
+
         </div>
     );
 };
