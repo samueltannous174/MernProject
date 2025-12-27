@@ -6,10 +6,13 @@ dotenv.config();
 
 exports.register = async (req, res) => {
   try {
-    const { first_name, last_name, email, password } = req.body || {};
-    if (!first_name || !last_name || !email || !password)
-      return res.status(400).json({ error: 'All fields are required' });
+    console.log(req.body);
+    const { firstName, lastName, email, password } = req.body;
 
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -43,8 +46,7 @@ exports.register = async (req, res) => {
   }
 };
 
-/* ================= LOGIN ================= */
-export const login = async (req, res) => {
+exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -53,7 +55,9 @@ export const login = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    } 
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -86,4 +90,3 @@ export const login = async (req, res) => {
   }
 };
 
-//merging

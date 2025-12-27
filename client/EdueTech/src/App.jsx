@@ -1,28 +1,27 @@
 
 
-// import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useContext } from "react";
+
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
+
 import Home from "./components/Home";
 import AuthForm from "./components/AuthForm";
-import Dashboard from "./components/Dashboard";
+import ProfilePage from "./components/Profile";
 import ShowCalender from "./components/Calender/ShowCalender";
 import LearningAnalyticsDashboard from "./components/Charts/LearningAnalyticsDashboard";
 import TopicsSection from "./components/Lists/TopicCards";
 import VideosSection from "./components/Lists/VideoCards";
 import VideoPlayer from "./components/Lists/VideoPage";
-import { useContext } from "react";
-import { UserContext } from "./context/context.jsx";
 import DraftEditor from "./components/Editor/DraftEditor";
 import ViewTopicPage from "./components/Editor/ViewTopicPage";
 import Chat from "./components/Ai/Chat";
 
-
-
-
+import { UserContext } from "./context/context.jsx";
 
 export default function App() {
-
+  const { user } = useContext(UserContext);
 
   const videos = [
     {
@@ -38,25 +37,36 @@ export default function App() {
       category: "Express & APIs",
     },
   ];
-  const { user } = useContext(UserContext);
 
   return (
     <Router>
-      <NavBar user={user} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<AuthForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/topics" element={<TopicsSection />} />
-        <Route path="/videos" element={<VideosSection />} />
-        <Route path="/watch/:id" element={<VideoPlayer videos={videos} />} />
-        <Route path="/calendar" element={<ShowCalender />} />
-        <Route path="/charts" element={<LearningAnalyticsDashboard />} />
-        <Route path="/editor" element={<DraftEditor />} />
-        <Route path="/topics/:id" element={<ViewTopicPage />} />
-        <Route path="/chat" element={<Chat />} />
-      </Routes> 
-    </Router>
-  )
-}
+      {/* GLOBAL LAYOUT */}
+      <div className="min-h-screen flex flex-col bg-gray-900  ">
 
+        
+        <NavBar user={user} />
+
+     
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth" element={<AuthForm />} />
+            <Route path="/dashboard" element={<ProfilePage />} />
+            <Route path="/topics" element={<TopicsSection />} />
+            <Route path="/videos" element={<VideosSection />} />
+            <Route path="/watch/:id" element={<VideoPlayer videos={videos} />} />
+            <Route path="/calendar" element={<ShowCalender />} />
+            <Route path="/charts" element={<LearningAnalyticsDashboard />} />
+            <Route path="/editor" element={<DraftEditor />} />
+            <Route path="/topics/:id" element={<ViewTopicPage />} />
+            <Route path="/chat" element={<Chat />} />
+          </Routes>
+        </main>
+
+       
+        <Footer />
+
+      </div>
+    </Router>
+  );
+}

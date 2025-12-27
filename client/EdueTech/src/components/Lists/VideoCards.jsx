@@ -33,3 +33,14 @@ const VideosCards = () => {
 };
 
 export default VideosCards;
+// charts
+//home page
+// topics  
+// navigate
+// profile
+// calender
+// editor
+// ai  
+//footer
+
+

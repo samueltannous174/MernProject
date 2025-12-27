@@ -23,6 +23,9 @@ app.use(aiRoutes);
 const topicRoutes = require("./routes/topicRoutes");
 app.use(topicRoutes);
 
+const profileRoutes = require("./routes/profileRoutes");
+app.use(profileRoutes);
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
