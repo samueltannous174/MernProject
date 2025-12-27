@@ -1,8 +1,7 @@
-
 import { Link } from "react-router-dom";
 
+export default function TopicGrid({ topics, label }) {
 
-function TopicGrid({ topics, label }) {
     return (
         <div style={{
             display: "grid",
@@ -13,7 +12,10 @@ function TopicGrid({ topics, label }) {
                 <Link
                     key={t._id}
                     to={`/topic/${t._id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
+                    style={{
+                        textDecoration: "none",
+                        color: "inherit"
+                    }}
                 >
                     <div style={{
                         background: "#fff",
@@ -41,6 +43,7 @@ function TopicGrid({ topics, label }) {
                             {new Date(t.createdAt).toLocaleString()}
                         </div>
 
+                        {/* ONLY show for enrolled topics */}
                         {label === "Enrolled" && (
                             <div style={{ marginTop: 6, color: "#16a34a" }}>
                                 ✔ Enrolled
@@ -53,5 +56,3 @@ function TopicGrid({ topics, label }) {
         </div>
     );
 }
-
-export default TopicGrid;

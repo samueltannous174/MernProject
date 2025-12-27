@@ -41,10 +41,10 @@ export default function Chat() {
             const payload = {
                 user: user.id,  
                 topic,
+                mainImage,
                 learningPath: path,
                 videos,
                 mistakes,
-                fullResponse: reply
             };
 
             const res = await axios.post(
