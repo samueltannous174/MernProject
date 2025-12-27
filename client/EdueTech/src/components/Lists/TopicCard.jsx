@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import NavBar from "../components/NavBar";
+
 
 const TopicCard = ({ topic }) => {
     return (
