@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import NavBar from "../components/NavBar";
+
+
 
 const colors = ["#bfdbfe", "#bbf7d0", "#fde68a", "#e9d5ff", "#fecaca"];
 

@@ -1,6 +1,8 @@
 import { useEffect, useState, memo } from "react";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
 import { useParams } from "react-router-dom";
+import NavBar from "../components/NavBar";
+
 
 import "draft-js/dist/Draft.css";
 

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import NavBar from "../components/NavBar";
+
 
 export default function Chat() {
     const [topic, setTopic] = useState("");

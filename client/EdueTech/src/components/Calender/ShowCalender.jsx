@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 import MyCalendar from "./MyCalendar";
 import SlotEditor from "./SlotEditor";
+import NavBar from "../components/NavBar";
+
 
 const ShowCalendar = () => {
     const [view, setView] = useState("week");

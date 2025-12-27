@@ -1,3 +1,6 @@
+import NavBar from "../components/NavBar";
+
+
 import {
     PieChart,
     Pie,
