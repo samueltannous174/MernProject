@@ -122,7 +122,7 @@ export default function DraftAdvancedEditor() {
             img.src = event.target.result;
 
             img.onload = () => {
-                const MAX_WIDTH = 500;   // 👈 choose your size
+                const MAX_WIDTH = 500;   // 
                 const scale = Math.min(MAX_WIDTH / img.width, 1);
 
                 const canvas = document.createElement("canvas");
@@ -184,7 +184,6 @@ export default function DraftAdvancedEditor() {
     return (
         <div style={{ maxWidth: "80%", margin: "20px auto" }}>
 
-            {/* TITLE INPUT */}
             <input
                 type="text"
                 value={title}
@@ -199,7 +198,6 @@ export default function DraftAdvancedEditor() {
                 }}
             />
 
-            {/* MAIN IMAGE */}
             <label style={{ display: "block", marginBottom: 8 }}>
                 📌 Main Image
                 <input

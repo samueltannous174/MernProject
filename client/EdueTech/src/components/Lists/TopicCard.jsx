@@ -5,7 +5,7 @@ const TopicCard = ({ topic }) => {
     const { user } = useContext(UserContext);
     const [enrolling, setEnrolling] = useState(false);
     const [isEnrolled, setIsEnrolled] = useState(
-        topic.users?.includes(user?.id) // mark enrolled if already inside array
+        topic.users?.includes(user?.id) 
     );
 
     const handleEnroll = async () => {

@@ -64,7 +64,6 @@ const SlotEditor = ({ event, topics = [], onSave, onDelete, onClose }) => {
                     Edit Event
                 </h3>
 
-                {/* Topic Dropdown */}
                 {topics.length > 0 && (
                     <div className="mb-4">
                         <label className="block text-xs font-bold uppercase text-gray-500 mb-1">
@@ -91,7 +90,6 @@ const SlotEditor = ({ event, topics = [], onSave, onDelete, onClose }) => {
                     </div>
                 )}
 
-                {/* Title Input */}
                 <div className="mb-4">
                     <label className="block text-xs font-bold uppercase text-gray-500 mb-1">
                         Title
