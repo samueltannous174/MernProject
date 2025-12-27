@@ -1,6 +1,8 @@
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import NavBar from "../components/NavBar";
+
 
 const localizer = momentLocalizer(moment);
 

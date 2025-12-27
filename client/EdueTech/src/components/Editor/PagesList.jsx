@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
 import { styleMap, blockRendererFn } from "./EditorConfig";
+import NavBar from "../components/NavBar";
+
 
 export default function PagesList() {
     const [pages, setPages] = useState([]);

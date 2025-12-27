@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import ListContainer from "./ListContainer";
 import TopicCard from "./TopicCard";
+import NavBar from "../components/NavBar";
+
 
 const TopicsCards = () => {
     const [topics, setTopics] = useState([]);
