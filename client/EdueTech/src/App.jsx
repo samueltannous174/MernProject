@@ -26,9 +26,17 @@ export default function App() {
 
   const { user } = useContext(UserContext);
 
+
   return (
     <Router>
-      <NavBar user={user} />
+    <div className="min-h-screen flex flex-col bg-gray-900  ">
+      
+<NavBar user={user} />
+
+
+    
+      <main className="flex-grow">
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<GuestRoute><AuthForm /></GuestRoute>} />
@@ -42,7 +50,12 @@ export default function App() {
         <Route path="/topic/:id" element={<ProtectedRoute><TopicDetails /></ProtectedRoute>} />
 
       </Routes> 
-    </Router>
+       </main>
+   
+    
+   
+    </div>
+     </Router>
   )
 }
 

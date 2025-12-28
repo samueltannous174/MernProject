@@ -44,7 +44,7 @@ export default function UserTopics() {
     }, [user]);
 
     if (!user) return <h2>Please login to view your topics</h2>;
-    if (loading) return <h3>Loading…</h3>;
+    if (loading) return <h3 >Loading…</h3>;
 
     return (
         

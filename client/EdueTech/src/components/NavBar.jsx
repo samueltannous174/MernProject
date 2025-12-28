@@ -50,7 +50,7 @@ export default function NavBar() {
           </Link>
 
           <Link to="/chat" className="flex items-center gap-2 hover:text-blue-400 transition">
-            <FaComments /> Chat
+            <FaComments /> Ai Assistant
           </Link>
 
         </div>
