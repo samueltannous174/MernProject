@@ -6,7 +6,7 @@ export default function GuestRoute({ children }) {
     const { user } = useContext(UserContext);
 
     if (user) {
-        return <Navigate to="/dashboard" replace />;
+        return <Navigate to="/my-topics" replace />;
     }
 
     return children;

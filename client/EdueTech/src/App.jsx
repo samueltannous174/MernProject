@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import AuthForm from "./components/AuthForm";
-import Dashboard from "./components/Dashboard";
 import ShowCalender from "./components/Calender/ShowCalender";
 import LearningAnalyticsDashboard from "./components/Charts/LearningAnalyticsDashboard";
 import TopicsSection from "./components/Lists/TopicCards";
@@ -33,7 +32,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<GuestRoute><AuthForm /></GuestRoute>} />
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/topics" element={ <ProtectedRoute><TopicsSection /></ProtectedRoute>} />
         <Route path="/calendar" element={ <ProtectedRoute><ShowCalender /></ProtectedRoute>} />
         <Route path="/charts" element={<ProtectedRoute><LearningAnalyticsDashboard /></ProtectedRoute>} />

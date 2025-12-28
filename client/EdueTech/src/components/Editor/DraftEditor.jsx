@@ -1,4 +1,3 @@
-import NavBar from "../components/NavBar";
 
 
 import { useRef, useState, memo } from "react";

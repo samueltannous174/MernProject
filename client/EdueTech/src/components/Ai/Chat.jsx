@@ -5,7 +5,6 @@ import { UserContext } from "../../context/context";
 
 
 import ReactMarkdown from "react-markdown";
-import NavBar from "../components/NavBar";
 
 
 export default function Chat() {

@@ -3,7 +3,6 @@
     import SlotEditor from "./SlotEditor";
 import { UserContext } from "../../context/context";
 import axios from "axios";
-import NavBar from "../components/NavBar";
 
 
     const ShowCalendar = () => {

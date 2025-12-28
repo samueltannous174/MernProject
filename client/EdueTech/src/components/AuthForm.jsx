@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import HeroGif from "../assets/hero.gif";
 import { UserContext } from "../context/context.jsx";
 import { useContext } from "react";
-import NavBar from "../components/NavBar";
 
 
 

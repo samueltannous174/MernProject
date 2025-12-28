@@ -1,6 +1,5 @@
 import ListContainer from "./ListContainer";
 import VideoCard from "./VideoCard";
-import NavBar from "../components/NavBar";
 
 
 const videos = [
