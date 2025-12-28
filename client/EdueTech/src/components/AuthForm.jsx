@@ -20,6 +20,7 @@ export default function AuthForm() {
     lastName: "",
     email: "",
     password: "",
+
   });
 
   const [message, setMessage] = useState("");

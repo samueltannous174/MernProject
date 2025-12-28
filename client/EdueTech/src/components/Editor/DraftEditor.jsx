@@ -1,5 +1,3 @@
-
-
 import { useRef, useState, memo } from "react";
 import {
     Editor,
@@ -47,6 +45,7 @@ const Media = memo(({ block, contentState }) => {
             />
         );
     }
+
     return null;
 });
 
@@ -67,9 +66,20 @@ export default function DraftAdvancedEditor() {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [isSaving, setIsSaving] = useState(false);
 
-    // NEW FIELDS
     const [title, setTitle] = useState("");
     const [mainImage, setMainImage] = useState(null);
+
+    // ⭐ Get active inline styles
+    const currentStyle = editorState.getCurrentInlineStyle();
+
+    const isActive = (style) => currentStyle.has(style);
+
+    // ⭐ Active button style
+    const activeBtn = {
+        background: "#111827",
+        color: "white",
+        border: "1px solid black"
+    };
 
     const applyColor = (style) =>
         setEditorState(RichUtils.toggleInlineStyle(editorState, style));
@@ -124,7 +134,7 @@ export default function DraftAdvancedEditor() {
             img.src = event.target.result;
 
             img.onload = () => {
-                const MAX_WIDTH = 500;   // 
+                const MAX_WIDTH = 500;
                 const scale = Math.min(MAX_WIDTH / img.width, 1);
 
                 const canvas = document.createElement("canvas");
@@ -134,16 +144,13 @@ export default function DraftAdvancedEditor() {
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                // compress to JPEG (0.8 = good quality)
                 const resizedImage = canvas.toDataURL("image/jpeg", 0.8);
-
                 setMainImage(resizedImage);
             };
         };
 
         reader.readAsDataURL(file);
     };
-
 
     const handleSave = async () => {
 
@@ -214,20 +221,78 @@ export default function DraftAdvancedEditor() {
             </button>
 
             <div style={toolbarStyle}>
-                <button onClick={() => toggleStyle("BOLD")}>Bold</button>
-                <button onClick={() => toggleStyle("ITALIC")}>Italic</button>
-                <button onClick={() => toggleStyle("UNDERLINE")}>Underline</button>
 
+                {/* INLINE STYLES */}
+                <button
+                    style={isActive("BOLD") ? activeBtn : {}}
+                    onClick={() => toggleStyle("BOLD")}
+                >
+                    Bold
+                </button>
+
+                <button
+                    style={isActive("ITALIC") ? activeBtn : {}}
+                    onClick={() => toggleStyle("ITALIC")}
+                >
+                    Italic
+                </button>
+
+                <button
+                    style={isActive("UNDERLINE") ? activeBtn : {}}
+                    onClick={() => toggleStyle("UNDERLINE")}
+                >
+                    Underline
+                </button>
+
+                {/* FONT SIZE */}
                 <span style={{ marginLeft: 12 }}>Font Size:</span>
-                <button onClick={() => applyFontSize("FS_14")}>14</button>
-                <button onClick={() => applyFontSize("FS_18")}>18</button>
-                <button onClick={() => applyFontSize("FS_24")}>24</button>
-                <button onClick={() => applyFontSize("FS_32")}>32</button>
 
+                <button
+                    style={isActive("FS_14") ? activeBtn : {}}
+                    onClick={() => applyFontSize("FS_14")}
+                >
+                    14
+                </button>
+
+                <button
+                    style={isActive("FS_18") ? activeBtn : {}}
+                    onClick={() => applyFontSize("FS_18")}
+                >
+                    18
+                </button>
+
+                <button
+                    style={isActive("FS_24") ? activeBtn : {}}
+                    onClick={() => applyFontSize("FS_24")}
+                >
+                    24
+                </button>
+
+                <button
+                    style={isActive("FS_32") ? activeBtn : {}}
+                    onClick={() => applyFontSize("FS_32")}
+                >
+                    32
+                </button>
+
+                {/* COLORS */}
                 <span style={{ marginLeft: 12 }}>Color:</span>
-                <button onClick={() => applyColor("RED")}>Red</button>
-                <button onClick={() => applyColor("BLUE")}>Blue</button>
 
+                <button
+                    style={isActive("RED") ? activeBtn : {}}
+                    onClick={() => applyColor("RED")}
+                >
+                    Red
+                </button>
+
+                <button
+                    style={isActive("BLUE") ? activeBtn : {}}
+                    onClick={() => applyColor("BLUE")}
+                >
+                    Blue
+                </button>
+
+                {/* MEDIA */}
                 <label style={{ cursor: "pointer" }}>
                     📷 Image
                     <input type="file" hidden accept="image/*" onChange={addImage} />
@@ -260,7 +325,7 @@ const btnStyle = {
     padding: "6px 12px",
     borderRadius: 6,
     border: "1px solid #ccc",
-    background: "#f3f4f6",
+    background: "#134dc3ff",
     cursor: "pointer",
     marginBottom: 12,
 };
@@ -273,7 +338,7 @@ const toolbarStyle = {
     border: "1px solid #ddd",
     borderRadius: 6,
     marginBottom: 6,
-    background: "#fafafa",
+    background: "#b91c1cff",
 };
 
 const editorContainerStyle = {
@@ -281,6 +346,6 @@ const editorContainerStyle = {
     borderRadius: 8,
     padding: "12px 14px",
     minHeight: 220,
-    background: "#fff",
+    background: "#e7b4b4ff",
     lineHeight: 1.6,
 };

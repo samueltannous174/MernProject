@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { UserContext } from "../context/context.jsx";
 import HeroGif from "../assets/hero.gif";
 
-// 👉 ICONS
 import { FaHome, FaBook, FaCalendarAlt, FaChartBar, FaComments } from "react-icons/fa";
 
 export default function NavBar() {
@@ -23,39 +22,31 @@ export default function NavBar() {
 
       <div className="relative z-10 w-full flex justify-between items-center px-8 py-4">
 
-        {/* LOGO */}
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-green-300 bg-clip-text text-transparent cursor-pointer transition-transform hover:scale-110 hover:animate-bounce">
           EduTech 🚀
         </h1>
 
-        {/* NAV LINKS WITH ICONS */}
         <div className="flex items-center gap-6 text-white font-medium">
           <Link to="/" className="flex items-center gap-2 hover:text-blue-400 transition">
             <FaHome /> Home
           </Link>
 
-          <Link to="/topics" className="flex items-center gap-2 hover:text-blue-400 transition">
-            <FaBook /> Topics
-          </Link>
+          {user?.role === "admin" && (
+            <>
+              <Link to="/editor">Editor</Link>
+            </>
+          )}
 
-          <Link to="/calendar" className="flex items-center gap-2 hover:text-blue-400 transition">
-            <FaCalendarAlt /> Calendar
-          </Link>
-
-          <Link to="/charts" className="flex items-center gap-2 hover:text-blue-400 transition">
-            <FaChartBar /> Charts
-          </Link>
-          <Link to="/editor" className="flex items-center gap-2 hover:text-blue-400 transition">
-            <FaBook /> Editor
-          </Link>
-
-          <Link to="/chat" className="flex items-center gap-2 hover:text-blue-400 transition">
-            <FaComments /> Chat
-          </Link>
+          {user?.role !== "admin" && (
+            <>
+              <Link to="/topics">Topics</Link>
+              <Link to="/calendar">Calendar</Link>
+              <Link to="/charts">Charts</Link>
+            </>
+          )}
 
         </div>
 
-        {/* AUTH BUTTONS (UNCHANGED) */}
         <div className="flex items-center gap-4">
 
           {!user ? (
