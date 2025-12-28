@@ -18,6 +18,8 @@ import DraftEditor from "./components/Editor/DraftEditor";
 import ViewTopicPage from "./components/Editor/ViewTopicPage";
 import Chat from "./components/Ai/Chat";
 
+// import AdminTopics from "./components/adminTopics";
+
 import { UserContext } from "./context/context.jsx";
 
 export default function App() {
@@ -51,6 +53,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<AuthForm />} />
+            {/* <Route path="/admin/topics" element={<AdminTopics />} /> */}
+
             <Route path="/dashboard" element={<ProfilePage />} />
             <Route path="/topics" element={<TopicsSection />} />
             <Route path="/videos" element={<VideosSection />} />
