@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 
 const TopicSchema = new mongoose.Schema({
     title: { type: String, required: true },
-    mainImage: { type: String }, 
+  users: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ],    mainImage: { type: String }, 
     content: Object,
 }, {
     timestamps: true

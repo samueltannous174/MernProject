@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
 import { styleMap, blockRendererFn } from "./EditorConfig";
-import NavBar from "../components/NavBar";
 
 
 export default function PagesList() {
@@ -41,26 +40,23 @@ export default function PagesList() {
     );
 }
 
-// Helper: Takes the MongoDB JSON and turns it into non-editable HTML
 const StaticRenderer = ({ rawContent }) => {
     if (!rawContent) return null;
 
-    // 1. Convert JSON back to Draft.js State
     const contentState = convertFromRaw(rawContent);
     const editorState = EditorState.createWithContent(contentState);
 
     return (
         <Editor
             editorState={editorState}
-            readOnly={true}          // User cannot type
-            onChange={() => { }}      // Do nothing on change
+            readOnly={true}          
+            onChange={() => { }}      
             customStyleMap={styleMap}
             blockRendererFn={blockRendererFn}
         />
     );
 };
 
-// Normal CSS-in-JS styles to make it look like a clean website
 const articleStyle = {
     background: "#fff",
     padding: "30px",

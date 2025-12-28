@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import HeroGif from "../assets/hero.gif";
-import NavBar from "../components/NavBar";
 
 
 export default function Home() {

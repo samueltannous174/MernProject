@@ -31,3 +31,46 @@ exports.getTopicById = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+exports.addUserToTopic = async (req, res) => {
+  try {
+    const { topicId } = req.params;
+    const { userId } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ message: "userId is required" });
+    }
+
+    const topic = await Topic.findByIdAndUpdate(
+      topicId,
+      { $addToSet: { users: userId } },  // prevents duplicates
+      { new: true }
+    );
+
+    if (!topic) {
+      return res.status(404).json({ message: "Topic not found" });
+    }
+
+    res.status(200).json(topic);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+exports.getTopicsForUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const topics = await Topic.find({ users: userId })
+      .sort({ createdAt: -1 })
+      .populate("users", "name email"); // optional
+
+    res.status(200).json(topics);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

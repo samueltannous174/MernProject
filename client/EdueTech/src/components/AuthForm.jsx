@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HeroGif from "../assets/hero.gif";
 import { UserContext } from "../context/context.jsx";
-import NavBar from "../components/NavBar";
+import { useContext } from "react";
 
 
 
