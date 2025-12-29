@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/context";
+import {Link} from "react-router-dom";
 
 const TopicCard = ({ topic }) => {
     const { user } = useContext(UserContext);
@@ -71,37 +72,42 @@ const TopicCard = ({ topic }) => {
 
             <h3>{topic.title || topic.topic}</h3>
 
-            {isEnrolled ? (
-                <button
-                    disabled
-                    style={{
-                        marginTop: 10,
-                        padding: "8px 14px",
-                        borderRadius: 8,
-                        border: "none",
-                        background: "#16a34a",
-                        color: "white"
-                    }}
-                >
-                    ✔ Enrolled
-                </button>
-            ) : (
-                <button
-                    onClick={handleEnroll}
-                    disabled={enrolling}
-                    style={{
-                        marginTop: 10,
-                        padding: "8px 14px",
-                        borderRadius: 8,
-                        border: "none",
-                        background: "#2563eb",
-                        color: "white",
-                        cursor: "pointer"
-                    }}
-                >
-                    {enrolling ? "Enrolling…" : "Enroll"}
-                </button>
+            {!user.role === "admin" && (
+                <>
+                    {isEnrolled ? (
+                        <button disabled style={{  }}>
+                            ✔ Enrolled
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleEnroll}
+                            disabled={enrolling}
+                            style={{ }}
+                        >
+                            {enrolling ? "Enrolling…" : "Enroll"}
+                        </button>
+                    )}
+                </>
             )}
+
+
+
+            <Link
+                to={`/topics/${topic._id}`}
+                style={{
+                    display: "inline-block",
+                    marginTop: 10,
+                    marginLeft: 10,
+                    fontSize: "14px",
+                    color: "#2563eb",
+                    textDecoration: "none",
+                    fontWeight: "600"
+                }}
+            >
+                View Details
+            </Link>
+
+         
 
         </div>
     );
