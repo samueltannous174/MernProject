@@ -7,29 +7,23 @@ import axios from "axios";
 
     const ShowCalendar = () => {
         const { user } = useContext(UserContext);
-
         const [view, setView] = useState("week");
         const [date, setDate] = useState(new Date());
         const [activeEvent, setActiveEvent] = useState(null);
         const [events, setEvents] = useState([]);
-
         const [myTopics, setMyTopics] = useState([]);
         const [enrolledTopics, setEnrolledTopics] = useState([]);
         const [loadingTopics, setLoadingTopics] = useState(true);
-
         useEffect(() => {
             if (!user) return;
-
             const fetchData = async () => {
                 try {
                     const myRes = await axios.get(
                         `http://localhost:8000/userAiTopics/${user.id}`
                     );
-
                     const enrolledRes = await axios.get(
                         `http://localhost:8000/getTopicsForUser/${user.id}`
                     );
-
                     setMyTopics(myRes.data);
                     setEnrolledTopics(enrolledRes.data);
                 } catch (err) {
@@ -38,53 +32,37 @@ import axios from "axios";
                     setLoadingTopics(false);
                 }
             };
-
             fetchData();
         }, [user]);
-
         const allTopics = [...myTopics, ...enrolledTopics];
-
         console.log(allTopics);
-
-
         const API_URL = "http://localhost:8000";
-
         const normalizeEvents = (data) =>
             data.map(ev => ({
                 ...ev,
                 start: new Date(ev.start),
                 end: new Date(ev.end),
             }));
-
         const reloadEvents = async () => {
             if (!user) return;
-
             const res = await fetch(`${API_URL}/events/${user.id}`);
             const data = await res.json();
-
             setEvents(normalizeEvents(data));
         };
-
         useEffect(() => {
             reloadEvents();
         }, [user]);
-
         const mergedEvents = useMemo(() => {
             if (!events.length) return [];
-
             const sorted = [...events].sort(
                 (a, b) => new Date(a.start) - new Date(b.start)
             );
-
             const merged = [];
             let current = { ...sorted[0] };
-
             for (let i = 1; i < sorted.length; i++) {
                 const next = sorted[i];
-
                 const currentEnd = new Date(current.end).getTime();
                 const nextStart = new Date(next.start).getTime();
-
                 if (next.title === current.title && currentEnd === nextStart) {
                     current.end = next.end;
                 } else {
@@ -92,11 +70,9 @@ import axios from "axios";
                     current = { ...next };
                 }
             }
-
             merged.push(current);
             return merged;
         }, [events]);
-
         const handleSelectSlot = ({ start, end }) => {
             fetch(`${API_URL}/events`, {
                 method: "POST",
@@ -110,7 +86,6 @@ import axios from "axios";
                 }),
             }).then(() => reloadEvents());
         };
-
         const handleUpdateEvent = (updated) => {
             fetch(`${API_URL}/events`, {
                 method: "PUT",
@@ -119,10 +94,8 @@ import axios from "axios";
                     userId: user.id,
                     blockStart: activeEvent.start,
                     blockEnd: activeEvent.end,
-
                     title: updated.title,
                     color: updated.color,
-
                     topicId: updated.topicId ?? null,
                 }),
             }).then(() => {
@@ -130,8 +103,6 @@ import axios from "axios";
                 reloadEvents();
             });
         };
-
-
         const handleDeleteEvent = () => {
             fetch(`${API_URL}/events`, {
                 method: "DELETE",
@@ -168,7 +139,6 @@ import axios from "axios";
                         },
                     })}
                 />
-
                 {activeEvent && (
                     <SlotEditor
                         event={activeEvent}
@@ -177,11 +147,8 @@ import axios from "axios";
                         onDelete={handleDeleteEvent}
                         onClose={() => setActiveEvent(null)}
                     />
-
                 )}
-
             </div>
         );
     };
-
     export default ShowCalendar;

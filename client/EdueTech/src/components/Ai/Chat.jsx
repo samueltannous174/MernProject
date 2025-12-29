@@ -129,7 +129,6 @@ export default function Chat() {
 
         try {
             setLoading(true);
-
             setReply("");
             setVideos([]);
             setMistakes([]);
@@ -143,7 +142,6 @@ export default function Chat() {
                 "(no response from model)";
 
             setReply(text);
-
             setPath(extractLearningPath(text));
             setVideos(extractVideoBlocks(text));
             setMistakes(extractMistakeBlocks(text));
@@ -173,7 +171,7 @@ export default function Chat() {
 
             <div
                 style={{
-                   background: "linear-gradient(to left, #6d9dea, #e5ebe7)",
+                    background: "linear-gradient(to left, #6d9dea, #e5ebe7)",
                     borderRadius: 14,
                     padding: 20,
                     boxShadow: "0 10px 24px rgba(0,0,0,.08)",
@@ -207,7 +205,7 @@ export default function Chat() {
                         fontSize: 20,
                         borderRadius: 8,
                         border: "none",
-                       background: "linear-gradient(to right, #3B82F6, #86EFAC)",
+                        background: "linear-gradient(to right, #3B82F6, #86EFAC)",
                         color: "white",
                         cursor: "pointer",
                         marginTop: 50
@@ -223,8 +221,6 @@ export default function Chat() {
                         padding: 18,
                         borderRadius: 12,
                         lineHeight: 1.65,
-                       
-                        
                     }}
                 >
                     <ReactMarkdown>{reply}</ReactMarkdown>
@@ -248,8 +244,7 @@ export default function Chat() {
 
                 {path.length > 0 && (
                     <>
-                        <h2 style={{ marginTop: 28 }}>🎯 Learning Path</h2>
-
+                        <h2 style={{ marginTop: 28 }}> Learning Path</h2>
                         <div
                             style={{
                                 display: "grid",
@@ -270,13 +265,11 @@ export default function Chat() {
                                         display: "flex",
                                         flexDirection: "column",
                                         height: "100%"
-
                                     }}
                                 >
                                     <strong style={{ color: "#2563eb" }}>
-                                        🚀 Stage {i + 1}
+                                        Stage {i + 1}
                                     </strong>
-
                                     <div
                                         style={{
                                             marginTop: 6,
@@ -284,7 +277,7 @@ export default function Chat() {
                                             lineHeight: 1.55
                                         }}
                                     >
-                                       {p}
+                                        {p}
                                     </div>
                                 </div>
                             ))}
@@ -294,7 +287,7 @@ export default function Chat() {
 
                 {videos.length > 0 && (
                     <>
-                        <h2 style={{ marginTop: 28 }}>🎥 Video Resources</h2>
+                        <h2 style={{ marginTop: 28 }}> Video Resources</h2>
 
                         {videos.map((v, i) => (
                             <div
@@ -320,7 +313,6 @@ export default function Chat() {
                                         border: "1px solid #ddd"
                                     }}
                                 />
-
                                 <div style={{ marginTop: 8 }}>
                                     <strong>{v.title}</strong>
                                     <div style={{ fontSize: 12, color: "#666" }}>{v.url}</div>
@@ -333,7 +325,6 @@ export default function Chat() {
                 {mistakes.length > 0 && (
                     <>
                         <h2 style={{ marginTop: 28 }}>⚠️ Common Pitfalls</h2>
-
                         <div
                             style={{
                                 display: "grid",
@@ -419,11 +410,9 @@ export default function Chat() {
                             cursor: user ? "pointer" : "not-allowed"
                         }}
                     >
-                        ✔ Accept & Save to My Learning Plans
+                        Accept & Save to My Learning Plans
                     </button>
                 )}
-
-
             </div>
         </div>
     );

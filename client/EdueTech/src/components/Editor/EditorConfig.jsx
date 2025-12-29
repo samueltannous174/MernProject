@@ -16,7 +16,6 @@ export const Media = memo(({ block, contentState }) => {
     const entity = contentState.getEntity(block.getEntityAt(0));
     const { src } = entity.getData();
     const type = entity.getType();
-
     if (type === "image") {
         return <img src={src} alt="" style={{ maxWidth: "100%", borderRadius: 10, display: 'block', margin: '10px 0' }} />;
     }
