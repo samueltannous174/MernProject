@@ -17,6 +17,7 @@ import TopicDetails from "./components/Ai/TopicDetails";
 import ProtectedRoute from "./context/ProtectedRoutes";
 import GuestRoute from "./context/GuestRoute";
 import AdminRoute from "./context/AdminRoutes";
+import Footer from "./components/Footer.jsx";
 
 
 
@@ -30,7 +31,7 @@ export default function App() {
 
   return (
     <Router>
-    <div className="min-h-screen flex flex-col bg-gray-900  ">
+    <div className="min-h-screen flex flex-col bg-[linear-gradient(to_bottom,#07101d,#96cfef)]  ">
       
 <NavBar user={user} />
 
@@ -51,11 +52,15 @@ export default function App() {
         <Route path="/topic/:id" element={<ProtectedRoute><TopicDetails /></ProtectedRoute>} />
       </Routes> 
        </main>
+       <Footer />
+     
    
     
    
     </div>
+    
      </Router>
+      
   )
 }
 

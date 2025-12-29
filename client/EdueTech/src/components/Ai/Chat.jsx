@@ -173,7 +173,7 @@ export default function Chat() {
 
             <div
                 style={{
-                   background: "linear-gradient(to left, #6d9dea, #e5ebe7)",
+                   background: "linear-gradient(to left,#e9ecf0,#96cfef)",
                     borderRadius: 14,
                     padding: 20,
                     boxShadow: "0 10px 24px rgba(0,0,0,.08)",
@@ -207,7 +207,7 @@ export default function Chat() {
                         fontSize: 20,
                         borderRadius: 8,
                         border: "none",
-                       background: "linear-gradient(to right, #3B82F6, #86EFAC)",
+                       background: "linear-gradient(to right, #3B82F6, #47bd70)",
                         color: "white",
                         cursor: "pointer",
                         marginTop: 50
