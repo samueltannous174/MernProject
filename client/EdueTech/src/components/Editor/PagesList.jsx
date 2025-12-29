@@ -17,20 +17,17 @@ export default function PagesList() {
             }
         };
         fetchPages();
-    }, []);
+    },[]);
 
     return (
         <div style={{ maxWidth: "900px", margin: "40px auto", fontFamily: "sans-serif" }}>
             <h1 style={{ textAlign: 'center', color: '#111', borderBottom: '2px solid #eee', paddingBottom: '20px' }}>
                 Published Articles
             </h1>
-
             {pages.map((page) => (
                 <article key={page._id} style={articleStyle}>
                     <h2 style={titleStyle}>{page.title}</h2>
                     <p style={dateStyle}>Published on: {new Date(page.createdAt).toLocaleDateString()}</p>
-
-                    {/* This is where the magic happens: Normal page rendering */}
                     <div style={contentWrapper}>
                         <StaticRenderer rawContent={page.content} />
                     </div>
@@ -42,10 +39,8 @@ export default function PagesList() {
 
 const StaticRenderer = ({ rawContent }) => {
     if (!rawContent) return null;
-
     const contentState = convertFromRaw(rawContent);
     const editorState = EditorState.createWithContent(contentState);
-
     return (
         <Editor
             editorState={editorState}

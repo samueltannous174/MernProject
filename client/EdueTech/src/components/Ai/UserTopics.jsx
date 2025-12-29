@@ -8,44 +8,32 @@ import TopicGrid from "./TopicGrid";
 export default function UserTopics() {
 
     const { user } = useContext(UserContext);
-
     const [myTopics, setMyTopics] = useState([]);
     const [enrolledTopics, setEnrolledTopics] = useState([]);
-
     const [loading, setLoading] = useState(true);
     console.log(myTopics);
-
     useEffect(() => {
         if (!user) return;
-
         const fetchData = async () => {
             try {
-
                 const myRes = await axios.get(
                     `http://localhost:8000/userAiTopics/${user.id}`
                 );
-
                 const enrolledRes = await axios.get(
                     `http://localhost:8000/getTopicsForUser/${user.id}`
                 );
-
                 setMyTopics(myRes.data);
                 setEnrolledTopics(enrolledRes.data);
-
             } catch (err) {
                 console.error("Failed to load topics:", err);
             } finally {
                 setLoading(false);
             }
         };
-
         fetchData();
-
     }, [user]);
-
     if (!user) return <h2>Please login to view your topics</h2>;
     if (loading) return <h3 >Loading…</h3>;
-
     return (
         
         <div style={{ maxWidth: 1000, margin: "30px auto" }}>
@@ -54,7 +42,6 @@ export default function UserTopics() {
                 Welcome, {user.firstName} {user.lastName}
             </h2>
             <p className="text-center text-gray-600 mb-6">{user.email}</p>
-
             <div className="flex justify-center gap-4 mb-6">
                 <Link
                     to="/calendar"
@@ -68,24 +55,16 @@ export default function UserTopics() {
                 >
                     📊 Learning Analytics
                 </Link>
-
-
             </div>
             </div>
-
-            <h1 style={{color:"white",size:30, margin: "30px 0",textAlign:"center",fontWeight:"bold",fontSize:"40px"}}>📚 My Learning Plans</h1>
-
+            <h1 style={{color:"white",size:30, margin: "30px 0",textAlign:"center",fontWeight:"bold",fontSize:"40px"}}>My Learning Plans</h1>
+            
             {myTopics.length === 0 && <p style={{color:"white" ,size:20 ,fontSize:"20px"}}>No saved plans yet.</p>}
-
             <TopicGrid topics={myTopics} />
-
             <hr style={{ margin: "30px 0", color: "white" }} />
-
-
+            
             {enrolledTopics.length === 0 && <p style={{color:"white" ,size:20 ,fontSize:"20px"}} >You are not enrolled in any topics yet.</p>}
-
             <TopicGrid topics={enrolledTopics} label="Enrolled" />
-
         </div>
     );
 }

@@ -4,7 +4,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 
 const localizer = momentLocalizer(moment);
-
 const MyCalendar = (props) => {
     return (
         <div style={{ height: "100%" }}>
@@ -17,5 +16,4 @@ const MyCalendar = (props) => {
         </div>
     );
 };
-
 export default MyCalendar;

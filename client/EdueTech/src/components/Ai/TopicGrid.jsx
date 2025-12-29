@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 export default function TopicGrid({ topics, label }) {
-
     return (
         <div style={{
             display: "grid",
@@ -24,7 +23,6 @@ export default function TopicGrid({ topics, label }) {
                         border: "1px solid #e5e5e5",
                         boxShadow: "0 6px 14px rgba(0,0,0,.06)"
                     }}>
-
                         {t.mainImage && (
                             <img
                                 src={t.mainImage}
@@ -36,19 +34,15 @@ export default function TopicGrid({ topics, label }) {
                                 }}
                             />
                         )}
-
                         <h3>{t.title}</h3>
-
                         <div style={{ fontSize: 12, color: "#666" }}>
                             {new Date(t.createdAt).toLocaleString()}
                         </div>
-
                         {label === "Enrolled" && (
                             <div style={{ marginTop: 6, color: "#16a34a" }}>
                                 ✔ Enrolled
                             </div>
                         )}
-
                     </div>
                 </Link>
             ))}
