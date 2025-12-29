@@ -14,6 +14,7 @@ const styleMap = {
     BLUE: { color: "#2563eb" },
     GREEN: { color: "#15803d" },
     ORANGE: { color: "#ea580c" },
+    WHITE : { color: "white" },
     FS_14: { fontSize: "14px" },
     FS_18: { fontSize: "18px" },
     FS_24: { fontSize: "24px" },
@@ -204,17 +205,44 @@ export default function DraftAdvancedEditor() {
                     borderRadius: 6,
                     border: "1px solid #ccc",
                     marginBottom: 10,
+                    color: "white",
+                    size: 20
                 }}
             />
 
-            <label style={{ display: "block", marginBottom: 8 }}>
+            {/* <label style={{ display: "block", marginBottom: 8  ,color: "white" ,backgroundColor: "#1b58d2"}}>
                 📌 Main Image
                 <input
                     type="file"
                     accept="image/*"
                     onChange={handleMainImageUpload}
                 />
-            </label>
+            </label> */}
+            <button
+  type="button"
+  style={{
+    display: "block",
+    marginBottom: 8,
+    color: "white",
+    backgroundColor: "#1b58d2",
+    border: "1px solid #cccc",
+    borderRadius: 6,
+    padding: "8px 12px",
+    cursor: "pointer",
+    background: "linear-gradient(to right, #3B82F6, #86EFAC)",
+    fontSize: 20
+  }}
+>
+  📌 Main Image .
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleMainImageUpload}
+    
+   
+  />
+</button>
+
 
             <button onClick={handleSave} style={btnStyle} disabled={isSaving}>
                 {isSaving ? "Saving..." : "Save content"}
@@ -325,9 +353,13 @@ const btnStyle = {
     padding: "6px 12px",
     borderRadius: 6,
     border: "1px solid #ccc",
-    background: "#134dc3ff",
+    background: "linear-gradient(to right, #3B82F6, #86EFAC)" ,
     cursor: "pointer",
     marginBottom: 12,
+    color: "white",
+    fontSize: 20,
+    size: 20
+    
 };
 
 const toolbarStyle = {
@@ -335,17 +367,20 @@ const toolbarStyle = {
     gap: 8,
     flexWrap: "wrap",
     padding: 8,
-    border: "1px solid #ddd",
+    border: "2px solid #ddd",
     borderRadius: 6,
     marginBottom: 6,
-    background: "#b91c1cff",
+    background: "#fafafa",
+   
 };
 
 const editorContainerStyle = {
-    border: "1px solid #d1d5db",
+    border: "2px solid #d1d5db",
     borderRadius: 8,
     padding: "12px 14px",
     minHeight: 220,
     background: "#e7b4b4ff",
     lineHeight: 1.6,
+    color: "white",
+    
 };

@@ -42,6 +42,7 @@ export default function NavBar() {
               <Link to="/topics">Topics</Link>
               <Link to="/calendar">Calendar</Link>
               <Link to="/charts">Charts</Link>
+              <Link to="/chat">Ai Assistant</Link>
             </>
           )}
 

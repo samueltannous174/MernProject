@@ -44,7 +44,7 @@ export default function UserTopics() {
     }, [user]);
 
     if (!user) return <h2>Please login to view your topics</h2>;
-    if (loading) return <h3>Loading…</h3>;
+    if (loading) return <h3 >Loading…</h3>;
 
     return (
         
@@ -73,16 +73,16 @@ export default function UserTopics() {
             </div>
             </div>
 
-            <h1>📚 My Learning Plans</h1>
+            <h1 style={{color:"white",size:30, margin: "30px 0",textAlign:"center",fontWeight:"bold",fontSize:"40px"}}>📚 My Learning Plans</h1>
 
-            {myTopics.length === 0 && <p>No saved plans yet.</p>}
+            {myTopics.length === 0 && <p style={{color:"white" ,size:20 ,fontSize:"20px"}}>No saved plans yet.</p>}
 
             <TopicGrid topics={myTopics} />
 
-            <hr style={{ margin: "30px 0" }} />
+            <hr style={{ margin: "30px 0", color: "white" }} />
 
 
-            {enrolledTopics.length === 0 && <p>You are not enrolled in any topics yet.</p>}
+            {enrolledTopics.length === 0 && <p style={{color:"white" ,size:20 ,fontSize:"20px"}} >You are not enrolled in any topics yet.</p>}
 
             <TopicGrid topics={enrolledTopics} label="Enrolled" />
 

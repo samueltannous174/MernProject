@@ -165,18 +165,20 @@ export default function Chat() {
                 fontFamily: "Segoe UI, Arial"
             }}
         >
-            <h1 style={{ marginBottom: 6 }}>AI Programming Tutor</h1>
+            <h1 style={{ marginBottom: 6 ,color: "white" , fontSize: 40 }}>AI Programming Tutor</h1>
 
-            <p style={{ color: "#666", marginTop: 0 }}>
+            <p style={{ color: "white" ,fontSize: 20 ,fontFamily: "Segoe UI, Arial"}}>
                 Generates a structured learning path + videos + common mistakes guide
             </p>
 
             <div
                 style={{
-                    background: "white",
+                   background: "linear-gradient(to left, #6d9dea, #e5ebe7)",
                     borderRadius: 14,
                     padding: 20,
-                    boxShadow: "0 10px 24px rgba(0,0,0,.08)"
+                    boxShadow: "0 10px 24px rgba(0,0,0,.08)",
+                    margin: "40px 0",
+                    height: "500px"
                 }}
             >
                 <input
@@ -188,7 +190,11 @@ export default function Chat() {
                         padding: 12,
                         fontSize: 16,
                         borderRadius: 8,
-                        border: "1px solid #ccc"
+                        border: "1px solid #ccc",
+                        color: "#333",
+                        fontSize: 20
+                        
+
                     }}
                 />
 
@@ -198,12 +204,13 @@ export default function Chat() {
                     style={{
                         marginTop: 10,
                         padding: "10px 18px",
-                        fontSize: 16,
+                        fontSize: 20,
                         borderRadius: 8,
                         border: "none",
-                        background: "#2563eb",
+                       background: "linear-gradient(to right, #3B82F6, #86EFAC)",
                         color: "white",
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        marginTop: 50
                     }}
                 >
                     {loading ? "Generating…" : "Generate Learning Plan"}
@@ -215,7 +222,9 @@ export default function Chat() {
                         background: "#f7f7f7",
                         padding: 18,
                         borderRadius: 12,
-                        lineHeight: 1.65
+                        lineHeight: 1.65,
+                       
+                        
                     }}
                 >
                     <ReactMarkdown>{reply}</ReactMarkdown>
@@ -261,6 +270,7 @@ export default function Chat() {
                                         display: "flex",
                                         flexDirection: "column",
                                         height: "100%"
+
                                     }}
                                 >
                                     <strong style={{ color: "#2563eb" }}>
