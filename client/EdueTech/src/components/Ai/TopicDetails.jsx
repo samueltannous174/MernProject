@@ -91,7 +91,7 @@ export default function TopicDetails() {
                                     }}
                                 >
                                     <strong style={{ color: "#2563eb" }}>
-                                        🚀 Stage {i + 1}
+                                        Stage {i + 1}
                                     </strong>
 
                                     <div style={{ marginTop: 6, lineHeight: 1.55 }}>
@@ -143,7 +143,7 @@ export default function TopicDetails() {
 
                 {topic.mistakes?.length > 0 && (
                     <>
-                        <h2 style={{ marginTop: 28 }}>⚠️ Common Pitfalls</h2>
+                        <h2 style={{ marginTop: 28 }}> Common Pitfalls</h2>
 
                         <div
                             style={{
@@ -165,7 +165,7 @@ export default function TopicDetails() {
                                     }}
                                 >
                                     <strong style={{ color: "#c62828" }}>
-                                        ⚠️ Mistake {i + 1}
+                                        Mistake {i + 1}
                                     </strong>
 
                                     <div style={{ marginTop: 6 }}>

@@ -17,6 +17,7 @@ import TopicDetails from "./components/Ai/TopicDetails";
 import ProtectedRoute from "./context/ProtectedRoutes";
 import GuestRoute from "./context/GuestRoute";
 import AdminRoute from "./context/AdminRoutes";
+import Footer from "./components/Footer.jsx"
 
 
 
@@ -51,6 +52,7 @@ export default function App() {
         <Route path="/topic/:id" element={<ProtectedRoute><TopicDetails /></ProtectedRoute>} />
       </Routes> 
        </main>
+       <Footer />
    
     
    
