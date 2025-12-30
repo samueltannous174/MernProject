@@ -26,6 +26,9 @@ app.use(topicRoutes);
 const eventsRoutes = require("./routes/eventsRoutes.js");
 app.use(eventsRoutes);
 
+
+
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
