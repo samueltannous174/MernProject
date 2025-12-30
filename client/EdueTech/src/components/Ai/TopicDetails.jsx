@@ -39,7 +39,7 @@ export default function TopicDetails() {
             </p>
             <div
                 style={{
-                    background: "white",
+                    background: "",
                     borderRadius: 14,
                     padding: 20,
                     boxShadow: "0 10px 24px rgba(0,0,0,.08)"
@@ -120,7 +120,7 @@ export default function TopicDetails() {
                                     }}
                                 />
                                 <div style={{ marginTop: 8 }}>
-                                    <strong>{v.title}</strong>
+                                    <strong >{v.title}</strong>
                                     <div style={{ fontSize: 12, color: "#666" }}>{v.url}</div>
                                 </div>
                             </div>

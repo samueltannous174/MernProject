@@ -33,13 +33,15 @@ export default function NavBar() {
 
           {user?.role === "admin" && (
             <>
+              <Link to="/topics">Platform Topics</Link>
               <Link to="/editor">Editor</Link>
             </>
           )}
 
           {user?.role !== "admin" && (
             <>
-              <Link to="/topics">Topics</Link>
+              <Link to="/my-topics">My Topics</Link>
+              <Link to="/topics">Platform Topics</Link>
               <Link to="/calendar">Calendar</Link>
               <Link to="/charts">Charts</Link>
               <Link to="/chat">Ai Assistant</Link>

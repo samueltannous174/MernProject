@@ -4,13 +4,14 @@ export default function TopicGrid({ topics, label }) {
     return (
         <div style={{
             display: "grid",
+            margin: "20px 0",
             gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
             gap: 18
         }}>
             {topics.map(t => (
                 <Link
                     key={t._id}
-                    to={`/topic/${t._id}`}
+                    to={t.mistakes ? `/topic/${t._id}` : `/topics/${t._id}`}
                     style={{
                         textDecoration: "none",
                         color: "inherit"
@@ -29,6 +30,8 @@ export default function TopicGrid({ topics, label }) {
                                 alt="cover"
                                 style={{
                                     width: "100%",
+                                    height: "160px",
+                                    objectFit: "cover",
                                     borderRadius: 10,
                                     marginBottom: 10
                                 }}

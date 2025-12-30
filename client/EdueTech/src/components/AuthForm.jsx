@@ -70,9 +70,13 @@ export default function AuthForm() {
       if (res.data.user && res.data.token) {
         loginUser(res.data.user, res.data.token);
       }
+      if (res.data.role === "admin") {
+        navigate("/");
+      } else {
+        navigate("/dashboard");
+      }
 
 
-      navigate("/dashboard");
 
     } catch (err) {
       console.log(err);
