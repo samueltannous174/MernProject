@@ -7,7 +7,8 @@ import { FaHome, FaBook, FaCalendarAlt, FaChartBar, FaComments } from "react-ico
 export default function NavBar() {
   const { user, logoutUser } = useContext(UserContext);
   return (
-    <nav className="relative w-full bg-gray-900 overflow-hidden">
+    // <nav className="relative w-full bg-gray-900 overflow-hidden box-border  ">
+     <nav className="relative w-full bg-gray-900 h-25 shadow-lg shadow-blue-400/10 mb-8">
 
       <div className="absolute inset-0 -z-10">
         <img
@@ -17,13 +18,13 @@ export default function NavBar() {
         />
       </div>
 
-      <div className="relative z-10 w-full flex justify-between items-center px-8 py-4">
+      <div className="relative z-10 w-full flex justify-between items-center px-8 py-4 ">
 
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-green-300 bg-clip-text text-transparent cursor-pointer transition-transform hover:scale-110 hover:animate-bounce">
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-500 to-green-300 bg-clip-text text-transparent cursor-pointer transition-transform hover:scale-110 hover:animate-bounce">
           EduTech 🚀
         </h1>
 
-        <div className="flex items-center gap-6 text-white font-medium">
+        <div className="flex items-center gap-12 h-20 text-white  text-lg font-sans font-extrabold ">
           <Link to="/" className="flex items-center gap-2 hover:text-blue-400 transition">
             <FaHome /> Home
           </Link>
@@ -37,11 +38,12 @@ export default function NavBar() {
 
           {user?.role !== "admin" && (
             <>
-              <Link to="/my-topics">My Topics</Link>
-              <Link to="/topics">Platform Topics</Link>
-              <Link to="/calendar">Calendar</Link>
-              <Link to="/charts">Charts</Link>
-              <Link to="/chat">Ai Assistant</Link>
+            <Link to="/my-topics">My Topics</Link>
+<Link to="/topics"className="flex items-center gap-5 hover:text-blue-400 transition">Platform Topics</Link>
+<Link to="/calendar"className="flex items-center gap-5 hover:text-blue-400 transition">Calendar</Link>
+<Link to="/charts"className="flex items-center gap-5 hover:text-blue-400 transition">Charts</Link>
+<Link to="/chat"className="flex items-center gap-5 hover:text-blue-400 transition">Ai Assistant</Link>
+              
             </>
           )}
         </div>

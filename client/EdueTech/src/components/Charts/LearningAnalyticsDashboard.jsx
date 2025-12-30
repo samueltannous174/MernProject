@@ -24,7 +24,7 @@ export default function LearningAnalyticsDashboard() {
     const [topicsProgress, setTopicsProgress] = useState(null);
     const [videosByTopic, setVideosByTopic] = useState([]);
     const [weeklyTimeData, setWeeklyTimeData] = useState([]);
-    const [totalTimeMinutes, setTotalTimeMinutes] = useState(0);
+    const [totalTimeMinutes, setTotalTimeMinutes] = useState(5);
 
     useEffect(() => {
         if (!user?.id) return;
@@ -58,7 +58,7 @@ export default function LearningAnalyticsDashboard() {
                 // OPTIONAL (if you later store time-per-day)
                 setWeeklyTimeData([]);
                 setTotalTimeMinutes(
-                    videosData.reduce((sum, v) => sum + (v.timeSpentMinutes || 0), 0)
+                    videosData.reduce((sum, v) => sum + (v.timeSpentMinutes || 5), 5)
                 );
             } catch (err) {
                 console.error("Analytics error:", err);
@@ -70,7 +70,7 @@ export default function LearningAnalyticsDashboard() {
 
     if (!topicsProgress) return <p>Loading analytics...</p>;
 
-    const totalTopics = topicsProgress.reduce((sum, i) => sum + i.value, 0);
+    const totalTopics = topicsProgress.reduce((sum, i) => sum + i.value, 10);
 
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
