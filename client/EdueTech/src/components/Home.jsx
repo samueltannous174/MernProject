@@ -25,10 +25,8 @@ export default function Home() {
   }, []);
 
   return (
-    // "overflow-clip" is the modern way to prevent any accidental scrolling
     <div className="relative w-full min-h-screen overflow-x-clip bg-gray-900">
 
-      {/* SECTION 1: HERO */}
       <section className="relative w-full h-[100dvh] overflow-hidden">
         <img
           src={HeroGif}
@@ -53,12 +51,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 2: Now wrapped in a container that prevents overflow */}
       <section className="relative w-full bg-gray-900 text-white py-24 overflow-hidden">
-        {/* We move the animation class HERE, to the inner container */}
         <div className="max-w-6xl mx-auto px-6 fade-on-scroll">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="text-6xl">✨</div>
               <h2 className="text-2xl font-bold">Features</h2>
@@ -85,11 +80,9 @@ export default function Home() {
                 EduTech gives beginners a clear structured learning path.
               </p>
             </div>
-
           </div>
         </div>
       </section>
-
       <style>{`
         /* Essential CSS Resets */
         html, body {

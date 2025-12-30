@@ -17,11 +17,9 @@ import TopicDetails from "./components/Ai/TopicDetails";
 import ProtectedRoute from "./context/ProtectedRoutes";
 import GuestRoute from "./context/GuestRoute";
 import AdminRoute from "./context/AdminRoutes";
-import Footer from "./components/Footer.jsx"
+import Footer from "./components/Footer.jsx";
 import Notifications from "./components/Notofication.jsx"
-
-
-
+ 
 
 
 
@@ -33,7 +31,7 @@ export default function App() {
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-[linear-gradient(to_bottom,#07101d,#96cfef)]  ">      
+      <div className="min-h-screen flex flex-col min-h-screen flex flex-col bg-[linear-gradient(to_bottom,#07101d,#96cfef)]  ">      
 <NavBar user={user} />
 
 

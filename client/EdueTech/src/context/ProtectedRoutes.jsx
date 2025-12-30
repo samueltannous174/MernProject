@@ -4,10 +4,8 @@ import { UserContext } from "../context/context.jsx";
 
 export default function ProtectedRoute({ children }) {
     const { user } = useContext(UserContext);
-
     if (!user) {
         return <Navigate to="/auth" replace />;
     }
-
     return children;
 }
