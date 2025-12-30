@@ -88,7 +88,7 @@ REQUIRED OUTPUT FORMAT
     }
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview"
+      model: "gemini-2.5-flash"
     });
 
     const result = await model.generateContent(prompt);
@@ -114,19 +114,11 @@ const AiTopic = require("../models/AiTopic");
 
 exports.createAiTopic = async (req, res) => {
   try {
-const { user, title, learningPath, videos, mistakes, fullResponse, mainImage } = req.body;
-
-
-    // console.log(req.body);
-    console.log(req.body);
-
+    const { user, title, learningPath, videos, mistakes, fullResponse, mainImage } = req.body;
 
     if (!user || !title) {
-      return res.status(400).json({
-        message: "user and title are required"
-      });
+      return res.status(400).json({ message: "user and title are required" });
     }
-
 
     const doc = await AiTopic.create({
       user,
@@ -135,25 +127,22 @@ const { user, title, learningPath, videos, mistakes, fullResponse, mainImage } =
       videos,
       mistakes,
       fullResponse,
-      mainImage
+      mainImage,
     });
-    
+    console.log("🟢 user :", user);
+const io = req.app.get("io");
+const room = io.sockets.adapter.rooms.get(user);
+console.log(`Users in room ${user}:`, room ? room.size : 0);
 
+if (io) {
+   io.to(user).emit("notification", { message: "..." });
+}
     res.status(201).json(doc);
-
   } catch (err) {
     console.error("❌ createAiTopic failed:", err);
-
-    return res.status(500).json({
-      message: "Server error while saving topic",
-      error: err.message
-    });
+    res.status(500).json({ message: "Server error while saving topic", error: err.message });
   }
-}
-
-
-
-
+};
 
 exports.getUserTopics = async (req, res) => {
   try {

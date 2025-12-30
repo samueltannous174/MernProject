@@ -17,10 +17,15 @@ export default function Chat() {
     const navigate = useNavigate();
 
     const extractMainImage = (text) => {
-        const section = text.split("🖼")[1] || "";
-        const url = section.split("\n")[1]?.trim();
-        return url?.startsWith("http") ? url : "";
+        const sectionMatch = text.match(/🖼[\s\S]*?\n(https?:\/\/\S+)/);
+        if (!sectionMatch) return "";
+
+        const url = sectionMatch[1].trim();
+        if (!url.startsWith("http")) return "";
+
+        return url;
     };
+
 
     const extractLearningPath = (text) => {
         let section = text.split("🎯 Learning Path")[1] || "";
@@ -166,8 +171,10 @@ export default function Chat() {
                 </button>
 
                 <div style={{ marginTop: 20, background: "#f7f7f7", padding: 18, borderRadius: 12, lineHeight: 1.65 }}>
-                    <ReactMarkdown>{reply}</ReactMarkdown>
+                    {/* <ReactMarkdown>{reply}</ReactMarkdown> */}
                 </div>
+
+
 
                 {mainImage && (
                     <div style={{ marginTop: 20 }}>
