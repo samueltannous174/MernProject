@@ -51,11 +51,9 @@ export default function Home() {
         </div>
       </section>
 
-      
       <section className="relative w-full bg-gray-900 text-white py-24 overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 fade-on-scroll">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="text-6xl">✨</div>
               <h2 className="text-2xl font-bold">Features</h2>
@@ -82,11 +80,9 @@ export default function Home() {
                 EduTech gives beginners a clear structured learning path.
               </p>
             </div>
-
           </div>
         </div>
       </section>
-
       <style>{`
         /* Essential CSS Resets */
         html, body {

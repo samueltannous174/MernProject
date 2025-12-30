@@ -64,10 +64,6 @@ export default function UserTopics() {
             
             {enrolledTopics.length === 0 && <p style={{color:"white" ,size:20 ,fontSize:"20px"}} >You are not enrolled in any topics yet.</p>}
             <TopicGrid topics={enrolledTopics} label="Enrolled" />
-
-            <Link to="/chat" className="mt-6 inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-green-300 text-white rounded-lg hover:bg-purple-700 transition">
-                💬 Search For New Topic with Ai Assistant
-            </Link>
         </div>
     );
 }

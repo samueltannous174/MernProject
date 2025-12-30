@@ -21,7 +21,6 @@ export function UserProvider({ children }) {
   const loginUser = (userData, tokenValue) => {
     setUser(userData);
     setToken(tokenValue);
-
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", tokenValue);
   };
@@ -29,7 +28,6 @@ export function UserProvider({ children }) {
   const logoutUser = () => {
     setUser(null);
     setToken(null);
-
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   };
