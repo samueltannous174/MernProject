@@ -10,8 +10,8 @@ export default function NavBar() {
   const { user, logoutUser } = useContext(UserContext);
 
   return (
-    // <nav className="relative w-full bg-gray-900 h-30 shadow-lg shadow-blue-400/10 mb-8">
-    <nav className="relative w-full bg-gray-900 min-h-[110px] shadow-lg shadow-blue-400/10 mb-8">
+    <nav className="relative w-full bg-gray-900 h-25 shadow-lg shadow-blue-400/10 mb-8">
+    {/* // <nav className="relative w-full bg-gray-900 min-h-[110px] shadow-lg shadow-blue-400/10 mb-8"> */}
 
 
       <div className="absolute inset-0 -z-10">
@@ -31,7 +31,7 @@ export default function NavBar() {
   EduTech 🚀
 </h1>
 
-        <div className="flex items-center gap-6 text-white font-medium text-xl">
+        <div className="flex items-center gap-12 text-white font-medium text-xl ">
           <Link to="/" className="flex items-center gap-2 hover:text-blue-400 transition">
             <FaHome /> Home
           </Link>
