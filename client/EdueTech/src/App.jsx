@@ -17,7 +17,8 @@ import TopicDetails from "./components/Ai/TopicDetails";
 import ProtectedRoute from "./context/ProtectedRoutes";
 import GuestRoute from "./context/GuestRoute";
 import AdminRoute from "./context/AdminRoutes";
-
+import Footer from "./components/Footer";
+import Notifications from "./components/Notofication";
 
 
 
@@ -30,8 +31,7 @@ export default function App() {
 
   return (
     <Router>
-    <div className="min-h-screen flex flex-col bg-gray-900  ">
-      
+      <div className="min-h-screen flex flex-col bg-[linear-gradient(to_bottom,#07101d,#96cfef)]  ">      
 <NavBar user={user} />
 
 
@@ -46,15 +46,17 @@ export default function App() {
         <Route path="/charts" element={<ProtectedRoute><LearningAnalyticsDashboard /></ProtectedRoute>} />
         <Route path="/editor" element={<AdminRoute><DraftEditor /></AdminRoute>} />
         <Route path="/topics/:id" element={<ProtectedRoute><ViewTopicPage /></ProtectedRoute>} />
-        <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         <Route path="/my-topics" element={<ProtectedRoute><UserTopics /></ProtectedRoute>} />
         <Route path="/topic/:id" element={<ProtectedRoute><TopicDetails /></ProtectedRoute>} />
+        <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+        <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+
       </Routes> 
-       </main>
+        </main>
+        <Footer />
    
-    
-   
-    </div>
+      </div>
+
      </Router>
   )
 }

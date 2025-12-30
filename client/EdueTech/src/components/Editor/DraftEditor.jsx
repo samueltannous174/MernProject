@@ -379,8 +379,7 @@ const editorContainerStyle = {
     borderRadius: 8,
     padding: "12px 14px",
     minHeight: 220,
-    background: "#e7b4b4ff",
+    background: "#859eaaff",
     lineHeight: 1.6,
-    color: "white",
     
 };

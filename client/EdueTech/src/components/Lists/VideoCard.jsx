@@ -13,7 +13,7 @@ const VideoCard = ({ video }) => {
             <img
                 src={`https://img.youtube.com/vi/${video.youtubeUrl?.split("v=")[1]}/hqdefault.jpg`}
                 alt={video.title}
-                className="w-full h-70 object-cover cursor-pointer"
+                className="w-full h-100 object-cover cursor-pointer"
                 onClick={handleWatch}
             />
 
