@@ -260,9 +260,7 @@ export default function Chat() {
                                 </div>
                         </div>
             </>
-            
                 )}
-
                 {videos.length > 0 && (
                     <>
                         <h2 style={{ marginTop: 28 }}> Video Resources</h2>
