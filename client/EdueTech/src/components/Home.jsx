@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import HeroGif from "../assets/hero.gif";
 
-
 export default function Home() {
   const navigate = useNavigate();
 
@@ -26,10 +25,7 @@ export default function Home() {
   }, []);
 
   return (
-    // PAGE SHOULD BE ALLOWED TO GROW
     <div className="relative w-full min-h-screen overflow-x-hidden">
-
-      {/* HERO — stays full screen */}
       <section className="relative w-full h-screen">
         <img
           src={HeroGif}
@@ -57,10 +53,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEXT SECTION — scrolls normally */}
       <section className="relative w-full bg-gray-900 text-white py-20 fade-on-scroll">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-6">
-
           <div className="flex flex-col items-center text-center space-y-4">
             <div className="text-6xl">✨</div>
             <h2 className="text-2xl font-bold">Features</h2>
@@ -87,7 +81,6 @@ export default function Home() {
               EduTech gives beginners a clear structured learning path.
             </p>
           </div>
-
         </div>
       </section>
 
