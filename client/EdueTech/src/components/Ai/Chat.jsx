@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/context";
 import ReactMarkdown from "react-markdown";
@@ -6,15 +7,14 @@ import ReactMarkdown from "react-markdown";
 export default function Chat() {
     const [title, setTitle] = useState("");
     const [reply, setReply] = useState("");
-
     const [path, setPath] = useState([]);
     const [videos, setVideos] = useState([]);
     const [mistakes, setMistakes] = useState([]);
+    const [mainImage, setMainImage] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const { user, token } = useContext(UserContext);
-
-    const [loading, setLoading] = useState(false);
-    const [mainImage, setMainImage] = useState("");
+    const navigate = useNavigate();
 
     const extractMainImage = (text) => {
         const section = text.split("🖼")[1] || "";
@@ -22,46 +22,13 @@ export default function Chat() {
         return url?.startsWith("http") ? url : "";
     };
 
-    const saveToDatabase = async () => {
-        if (!user) {
-            alert("You must be logged in to save");
-            return;
-        }
-
-        try {
-            const payload = {
-                user: user.id,
-                title,
-                mainImage,
-                learningPath: path,
-                videos,
-                mistakes,
-            };
-
-            await axios.post(
-                "http://localhost:8000/createAiTopic",
-                payload,
-                {
-                    headers: { Authorization: `Bearer ${token}` }
-                }
-            );
-            
-            navigate("/my-topics");
-        } catch (err) {
-            console.error(err);
-            navigate("/my-topics");
-
-        }
-    };
-
     const extractLearningPath = (text) => {
         let section = text.split("🎯 Learning Path")[1] || "";
         section = section.split("🎥")[0];
-
         return section
             .split(/\n\d\)/)
             .slice(1)
-            .map(s => s.trim())
+            .map((s) => s.trim())
             .slice(0, 5);
     };
 
@@ -70,17 +37,11 @@ export default function Chat() {
         const results = [];
 
         for (let line of lines) {
-            const match =
-                line.match(/Stage\s+\d+\s+—\s+(.*?)\s+—\s+(https?:\/\/\S+)/);
-
+            const match = line.match(/Stage\s+\d+\s+—\s+(.*?)\s+—\s+(https?:\/\/\S+)/);
             if (!match) continue;
 
             const title = match[1].trim();
-            let url = match[2]
-                .trim()
-                .replace(/[>\)\]]+$/, "")
-                .replace(/[\u200B-\u200D\uFEFF]/g, "");
-
+            let url = match[2].trim().replace(/[>\)\]]+$/, "").replace(/[\u200B-\u200D\uFEFF]/g, "");
             let videoId = "";
 
             if (url.includes("watch?v=")) {
@@ -90,9 +51,7 @@ export default function Chat() {
             }
 
             if (!videoId) continue;
-
-            const embed = `https://www.youtube.com/embed/${videoId}`;
-            results.push({ title, url, embed });
+            results.push({ title, url, embed: `https://www.youtube.com/embed/${videoId}` });
         }
 
         return results.slice(0, 5);
@@ -101,7 +60,7 @@ export default function Chat() {
     const extractMistakeBlocks = (text) => {
         const section = text.split("⚠️ 5 Common Mistakes")[1] || "";
         const items = section.split(/\n\d\)/).slice(1);
-        return items.slice(0, 5).map(b => b.trim());
+        return items.slice(0, 5).map((b) => b.trim());
     };
 
     const sendMessage = async () => {
@@ -118,11 +77,7 @@ export default function Chat() {
             setPath([]);
             setMainImage("");
 
-            const res = await axios.post(
-                "http://localhost:8000/chat",
-                { title }
-            );
-
+            const res = await axios.post("http://localhost:8000/chat", { title });
             const text = res.data?.content || "(no response from model)";
 
             setReply(text);
@@ -130,7 +85,6 @@ export default function Chat() {
             setVideos(extractVideoBlocks(text));
             setMistakes(extractMistakeBlocks(text));
             setMainImage(extractMainImage(text));
-
         } catch (err) {
             console.error(err);
             setReply("Server error — check console.");
@@ -139,18 +93,33 @@ export default function Chat() {
         }
     };
 
-    return (
-        <div
-            style={{
-                maxWidth: 1200,
-                margin: "40px auto",
-                fontFamily: "Segoe UI, Arial"
-            }}
-        >
-            <h1 style={{ marginBottom: 6, color: "white", fontSize: 40 }}>
-                AI Programming Tutor
-            </h1>
+    const saveToDatabase = async () => {
+        if (!user) return alert("You must be logged in to save");
 
+        try {
+            const payload = {
+                user: user.id,
+                title,
+                mainImage,
+                learningPath: path,
+                videos,
+                mistakes,
+            };
+
+            await axios.post("http://localhost:8000/createAiTopic", payload, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            navigate("/my-topics");
+        } catch (err) {
+            console.error(err);
+            navigate("/my-topics");
+        }
+    };
+
+    return (
+        <div style={{ maxWidth: 1200, margin: "40px auto", fontFamily: "Segoe UI, Arial" }}>
+            <h1 style={{ marginBottom: 6, color: "white", fontSize: 40 }}>AI Programming Tutor</h1>
             <p style={{ color: "white", fontSize: 20 }}>
                 Generates a structured learning path + videos + common mistakes guide
             </p>
@@ -161,7 +130,7 @@ export default function Chat() {
                     borderRadius: 14,
                     padding: 20,
                     boxShadow: "0 10px 24px rgba(0,0,0,.08)",
-                    margin: "40px 0"
+                    margin: "40px 0",
                 }}
             >
                 <input
@@ -175,7 +144,7 @@ export default function Chat() {
                         borderRadius: 8,
                         background: "#fff",
                         border: "1px solid #ccc",
-                        color: "#333"
+                        color: "#333",
                     }}
                 />
 
@@ -190,21 +159,13 @@ export default function Chat() {
                         border: "none",
                         background: "linear-gradient(to right, #3B82F6, #86EFAC)",
                         color: "white",
-                        cursor: "pointer"
+                        cursor: "pointer",
                     }}
                 >
                     {loading ? "Generating…" : "Generate Learning Plan"}
                 </button>
 
-                <div
-                    style={{
-                        marginTop: 20,
-                        background: "#f7f7f7",
-                        padding: 18,
-                        borderRadius: 12,
-                        lineHeight: 1.65,
-                    }}
-                >
+                <div style={{ marginTop: 20, background: "#f7f7f7", padding: 18, borderRadius: 12, lineHeight: 1.65 }}>
                     <ReactMarkdown>{reply}</ReactMarkdown>
                 </div>
 
@@ -213,26 +174,20 @@ export default function Chat() {
                         <img
                             src={mainImage}
                             alt="Topic cover"
-                            style={{
-                                width: "100%",
-                                borderRadius: 14,
-                                objectFit: "cover",
-                                maxHeight: 360
-                            }}
+                            style={{ width: "100%", borderRadius: 14, objectFit: "cover", maxHeight: 360 }}
                         />
                     </div>
                 )}
 
                 {path.length > 0 && (
                     <>
-                        <h2 style={{ marginTop: 28 }}> Learning Path</h2>
+                        <h2 style={{ marginTop: 28 }}>Learning Path</h2>
                         <div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns:
-                                    "repeat(auto-fill, minmax(260px, 1fr))",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
                                 gap: 18,
-                                marginTop: 10
+                                marginTop: 10,
                             }}
                         >
                             {path.map((p, i) => (
@@ -246,27 +201,20 @@ export default function Chat() {
                                         boxShadow: "0 6px 14px rgba(0,0,0,.06)",
                                         display: "flex",
                                         flexDirection: "column",
-                                        height: "100%"
+                                        height: "100%",
                                     }}
                                 >
-                                    <strong style={{ color: "#2563eb" }}>
-                                        Stage {i + 1}
-                                    </strong>
-                                            lineHeight: 1.55
-                                        }}
-                                    >
-                                        {p}
-                                    </div>
+                                    <strong style={{ color: "#2563eb" }}>Stage {i + 1}</strong>
+                                    <div style={{ lineHeight: 1.55 }}>{p}</div>
                                 </div>
+                            ))}
                         </div>
-            </>
-            
+                    </>
                 )}
 
                 {videos.length > 0 && (
                     <>
-                        <h2 style={{ marginTop: 28 }}> Video Resources</h2>
-
+                        <h2 style={{ marginTop: 28 }}>Video Resources</h2>
                         {videos.map((v, i) => (
                             <div
                                 key={i}
@@ -276,7 +224,7 @@ export default function Chat() {
                                     padding: 14,
                                     marginTop: 12,
                                     border: "1px solid #e5e5e5",
-                                    boxShadow: "0 6px 16px rgba(0,0,0,.08)"
+                                    boxShadow: "0 6px 16px rgba(0,0,0,.08)",
                                 }}
                             >
                                 <iframe
@@ -284,18 +232,11 @@ export default function Chat() {
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                     title={`video-${i}`}
-                                    style={{
-                                        width: "100%",
-                                        aspectRatio: "16/9",
-                                        borderRadius: 10,
-                                        border: "1px solid #ddd"
-                                    }}
+                                    style={{ width: "100%", aspectRatio: "16/9", borderRadius: 10, border: "1px solid #ddd" }}
                                 />
                                 <div style={{ marginTop: 8 }}>
                                     <strong>{v.title}</strong>
-                                    <div style={{ fontSize: 12, color: "#666" }}>
-                                        {v.url}
-                                    </div>
+                                    <div style={{ fontSize: 12, color: "#666" }}>{v.url}</div>
                                 </div>
                             </div>
                         ))}
@@ -308,10 +249,9 @@ export default function Chat() {
                         <div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns:
-                                    "repeat(auto-fill, minmax(260px, 1fr))",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
                                 gap: 18,
-                                marginTop: 10
+                                marginTop: 10,
                             }}
                         >
                             {mistakes.map((m, i) => (
@@ -322,25 +262,19 @@ export default function Chat() {
                                         borderRadius: 12,
                                         padding: 14,
                                         border: "1px solid #e3e3e3",
-                                        boxShadow: "0 6px 14px rgba(0,0,0,.06)"
+                                        boxShadow: "0 6px 14px rgba(0,0,0,.06)",
                                     }}
                                 >
-                                    <strong
-                                        style={{ color: "#c62828", marginBottom: 6 }}
-                                    >
-                                        ⚠️ Mistake {i + 1}
-                                    </strong>
-
+                                    <strong style={{ color: "#c62828", marginBottom: 6 }}>⚠️ Mistake {i + 1}</strong>
                                     <ReactMarkdown
                                         components={{
                                             pre: (props) => (
                                                 <pre
                                                     style={{
-                                                        background:
-                                                            "linear-gradient(to left,#e9ecf0,#96cfef)",
+                                                        background: "linear-gradient(to left,#e9ecf0,#96cfef)",
                                                         padding: "10px",
                                                         borderRadius: 8,
-                                                        whiteSpace: "pre-wrap"
+                                                        whiteSpace: "pre-wrap",
                                                     }}
                                                     {...props}
                                                 />
@@ -348,14 +282,13 @@ export default function Chat() {
                                             code: (props) => (
                                                 <code
                                                     style={{
-                                                        background:
-                                                            "linear-gradient(to left,#e9ecf0,#96cfef)",
+                                                        background: "linear-gradient(to left,#e9ecf0,#96cfef)",
                                                         padding: "2px 4px",
-                                                        borderRadius: 6
+                                                        borderRadius: 6,
                                                     }}
                                                     {...props}
                                                 />
-                                            )
+                                            ),
                                         }}
                                     >
                                         {m}
@@ -378,7 +311,7 @@ export default function Chat() {
                             border: "none",
                             background: user ? "#16a34a" : "#9ca3af",
                             color: "white",
-                            cursor: user ? "pointer" : "not-allowed"
+                            cursor: user ? "pointer" : "not-allowed",
                         }}
                     >
                         Accept & Save to My Learning Plans

@@ -18,6 +18,8 @@ import ProtectedRoute from "./context/ProtectedRoutes";
 import GuestRoute from "./context/GuestRoute";
 import AdminRoute from "./context/AdminRoutes";
 import Footer from "./components/Footer.jsx"
+import Notifications from "./components/Notofication.jsx"
+
 
 
 
