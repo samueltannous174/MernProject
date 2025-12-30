@@ -2,13 +2,10 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/context.jsx";
 import HeroGif from "../assets/hero.gif";
-
 import { FaHome, FaBook, FaCalendarAlt, FaChartBar, FaComments } from "react-icons/fa";
 
 export default function NavBar() {
-
   const { user, logoutUser } = useContext(UserContext);
-
   return (
     <nav className="relative w-full bg-gray-900 overflow-hidden">
 
@@ -47,7 +44,6 @@ export default function NavBar() {
               <Link to="/chat">Ai Assistant</Link>
             </>
           )}
-
         </div>
 
         <div className="flex items-center gap-4">

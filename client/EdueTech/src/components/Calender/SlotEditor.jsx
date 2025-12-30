@@ -5,15 +5,14 @@ import { useState, useEffect } from "react";
 const colors = ["#bfdbfe", "#bbf7d0", "#fde68a", "#e9d5ff", "#fecaca"];
 
 const SlotEditor = ({ event, topics = [], onSave, onDelete, onClose }) => {
-    const [title, setTitle] = useState(event.title);
-    const [color, setColor] = useState(event.color);
-    const [selectedTopicId, setSelectedTopicId] = useState("");
+const [title, setTitle] = useState(event.title);
+const [color, setColor] = useState(event.color);
+const [selectedTopicId, setSelectedTopicId] = useState("");
 
     useEffect(() => {
         setTitle(event.title);
         setColor(event.color);
 
-        // Prefer matching by topicId when available
         if (event.topicId) {
             const found = topics.find(t => t._id === event.topicId);
             if (found) {
@@ -44,7 +43,6 @@ const SlotEditor = ({ event, topics = [], onSave, onDelete, onClose }) => {
     const handleNavigate = () => {
         if (!selectedTopicId) return;
 
-
         const topic = topics.find(t => t._id === selectedTopicId);
         console.log(topic);
 
@@ -61,11 +59,9 @@ const SlotEditor = ({ event, topics = [], onSave, onDelete, onClose }) => {
     return (
         <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-[100]">
             <div className="bg-white p-6 rounded-xl shadow-2xl w-80 border border-gray-200">
-
                 <h3 className="text-lg font-bold mb-4 text-gray-800">
                     Edit Event
                 </h3>
-
                 {topics.length > 0 && (
                     <div className="mb-4">
                         <label className="block text-xs font-bold uppercase text-gray-500 mb-1">
@@ -105,7 +101,6 @@ const SlotEditor = ({ event, topics = [], onSave, onDelete, onClose }) => {
                     />
                 </div>
 
-                {/* Color Picker */}
                 <div className="mb-6">
                     <label className="block text-xs font-bold uppercase text-gray-500 mb-2">
                         Color Label
@@ -161,7 +156,6 @@ const SlotEditor = ({ event, topics = [], onSave, onDelete, onClose }) => {
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     );
