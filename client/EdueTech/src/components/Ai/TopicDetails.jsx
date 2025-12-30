@@ -10,7 +10,6 @@ export default function TopicDetails() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-
         const fetchTopic = async () => {
             try {
                 const res = await axios.get(`http://localhost:8000/aiTopic/${id}`);
@@ -21,13 +20,11 @@ export default function TopicDetails() {
                 setLoading(false);
             }
         };
-
         fetchTopic();
     }, [id]);
 
     if (loading) return <h2 style={{ textAlign: "center" }}>Loading…</h2>;
     if (!topic) return <h2 style={{ textAlign: "center" }}>Topic not found</h2>;
-
     return (
         <div
             style={{
@@ -36,13 +33,10 @@ export default function TopicDetails() {
                 fontFamily: "Segoe UI, Arial"
             }}
         >
-
             <h1 style={{ marginBottom: 6 }}>{topic.topic}</h1>
-
             <p style={{ color: "#666", marginTop: 0 }}>
                 Saved learning plan
             </p>
-
             <div
                 style={{
                     background: "",
@@ -51,7 +45,6 @@ export default function TopicDetails() {
                     boxShadow: "0 10px 24px rgba(0,0,0,.08)"
                 }}
             >
-
                 {topic.mainImage && (
                     <div style={{ marginBottom: 20 }}>
                         <img
@@ -66,11 +59,9 @@ export default function TopicDetails() {
                         />
                     </div>
                 )}
-
                 {topic.learningPath?.length > 0 && (
                     <>
                         <h2 style={{ marginTop: 10 }}>🎯 Learning Path</h2>
-
                         <div
                             style={{
                                 display: "grid",
@@ -91,9 +82,8 @@ export default function TopicDetails() {
                                     }}
                                 >
                                     <strong style={{ color: "#2563eb" }}>
-                                        🚀 Stage {i + 1}
+                                        Stage {i + 1}
                                     </strong>
-
                                     <div style={{ marginTop: 6, lineHeight: 1.55 }}>
                                         {p}
                                     </div>
@@ -102,11 +92,9 @@ export default function TopicDetails() {
                         </div>
                     </>
                 )}
-
                 {topic.videos?.length > 0 && (
                     <>
                         <h2 style={{ marginTop: 28 }}>🎥 Video Resources</h2>
-
                         {topic.videos.map((v, i) => (
                             <div
                                 key={i}
@@ -131,7 +119,6 @@ export default function TopicDetails() {
                                         border: "1px solid #ddd"
                                     }}
                                 />
-
                                 <div style={{ marginTop: 8 }}>
                                     <strong >{v.title}</strong>
                                     <div style={{ fontSize: 12, color: "#666" }}>{v.url}</div>
@@ -140,11 +127,9 @@ export default function TopicDetails() {
                         ))}
                     </>
                 )}
-
                 {topic.mistakes?.length > 0 && (
                     <>
-                        <h2 style={{ marginTop: 28 }}>⚠️ Common Pitfalls</h2>
-
+                        <h2 style={{ marginTop: 28 }}> Common Pitfalls</h2>
                         <div
                             style={{
                                 display: "grid",
@@ -165,9 +150,8 @@ export default function TopicDetails() {
                                     }}
                                 >
                                     <strong style={{ color: "#c62828" }}>
-                                        ⚠️ Mistake {i + 1}
+                                        Mistake {i + 1}
                                     </strong>
-
                                     <div style={{ marginTop: 6 }}>
                                         <ReactMarkdown>{m}</ReactMarkdown>
                                     </div>
@@ -176,20 +160,6 @@ export default function TopicDetails() {
                         </div>
                     </>
                 )}
-
-                {/* <h2 style={{ marginTop: 28 }}>🧾 Full Response</h2>
-
-                <div
-                    style={{
-                        background: "#f7f7f7",
-                        padding: 18,
-                        borderRadius: 12,
-                        lineHeight: 1.65
-                    }}
-                >
-                    <ReactMarkdown>{topic.fullResponse}</ReactMarkdown>
-                </div>
- */}
             </div>
         </div>
     );

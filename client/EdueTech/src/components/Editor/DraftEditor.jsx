@@ -63,19 +63,15 @@ const blockRendererFn = (block) => {
 export default function DraftAdvancedEditor() {
 
     const editorRef = useRef(null);
-
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [isSaving, setIsSaving] = useState(false);
-
     const [title, setTitle] = useState("");
     const [mainImage, setMainImage] = useState(null);
 
-    // ⭐ Get active inline styles
     const currentStyle = editorState.getCurrentInlineStyle();
 
     const isActive = (style) => currentStyle.has(style);
 
-    // ⭐ Active button style
     const activeBtn = {
         background: "#111827",
         color: "white",
@@ -209,18 +205,9 @@ export default function DraftAdvancedEditor() {
                     size: 20
                 }}
             />
-
-            {/* <label style={{ display: "block", marginBottom: 8  ,color: "white" ,backgroundColor: "#1b58d2"}}>
-                📌 Main Image
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleMainImageUpload}
-                />
-            </label> */}
             <button
-  type="button"
-  style={{
+    type="button"
+    style={{
     display: "block",
     marginBottom: 8,
     color: "white",
@@ -233,14 +220,13 @@ export default function DraftAdvancedEditor() {
     fontSize: 20
   }}
 >
-  📌 Main Image .
-  <input
+    📌 Main Image .
+    <input
     type="file"
     accept="image/*"
     onChange={handleMainImageUpload}
-    
-   
-  />
+
+    />
 </button>
 
 
@@ -250,7 +236,6 @@ export default function DraftAdvancedEditor() {
 
             <div style={toolbarStyle}>
 
-                {/* INLINE STYLES */}
                 <button
                     style={isActive("BOLD") ? activeBtn : {}}
                     onClick={() => toggleStyle("BOLD")}
@@ -272,7 +257,6 @@ export default function DraftAdvancedEditor() {
                     Underline
                 </button>
 
-                {/* FONT SIZE */}
                 <span style={{ marginLeft: 12 }}>Font Size:</span>
 
                 <button
@@ -303,7 +287,6 @@ export default function DraftAdvancedEditor() {
                     32
                 </button>
 
-                {/* COLORS */}
                 <span style={{ marginLeft: 12 }}>Color:</span>
 
                 <button
@@ -320,7 +303,6 @@ export default function DraftAdvancedEditor() {
                     Blue
                 </button>
 
-                {/* MEDIA */}
                 <label style={{ cursor: "pointer" }}>
                     📷 Image
                     <input type="file" hidden accept="image/*" onChange={addImage} />
@@ -359,7 +341,6 @@ const btnStyle = {
     color: "white",
     fontSize: 20,
     size: 20
-    
 };
 
 const toolbarStyle = {
@@ -371,7 +352,6 @@ const toolbarStyle = {
     borderRadius: 6,
     marginBottom: 6,
     background: "#fafafa",
-   
 };
 
 const editorContainerStyle = {
@@ -381,5 +361,5 @@ const editorContainerStyle = {
     minHeight: 220,
     background: "#859eaaff",
     lineHeight: 1.6,
-    
+    color: "white",
 };

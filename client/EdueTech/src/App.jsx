@@ -17,8 +17,8 @@ import TopicDetails from "./components/Ai/TopicDetails";
 import ProtectedRoute from "./context/ProtectedRoutes";
 import GuestRoute from "./context/GuestRoute";
 import AdminRoute from "./context/AdminRoutes";
-import Footer from "./components/Footer";
-import Notifications from "./components/Notofication";
+import Footer from "./components/Footer.jsx"
+
 
 
 
@@ -52,8 +52,8 @@ export default function App() {
         <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
 
       </Routes> 
-        </main>
-        <Footer />
+       </main>
+       <Footer />
    
       </div>
 

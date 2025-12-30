@@ -112,7 +112,6 @@ export default function Chat() {
 
         try {
             setLoading(true);
-
             setReply("");
             setVideos([]);
             setMistakes([]);
@@ -127,7 +126,6 @@ export default function Chat() {
             const text = res.data?.content || "(no response from model)";
 
             setReply(text);
-
             setPath(extractLearningPath(text));
             setVideos(extractVideoBlocks(text));
             setMistakes(extractMistakeBlocks(text));
@@ -198,6 +196,18 @@ export default function Chat() {
                     {loading ? "Generating…" : "Generate Learning Plan"}
                 </button>
 
+                <div
+                    style={{
+                        marginTop: 20,
+                        background: "#f7f7f7",
+                        padding: 18,
+                        borderRadius: 12,
+                        lineHeight: 1.65,
+                    }}
+                >
+                    <ReactMarkdown>{reply}</ReactMarkdown>
+                </div>
+
                 {mainImage && (
                     <div style={{ marginTop: 20 }}>
                         <img
@@ -215,8 +225,7 @@ export default function Chat() {
 
                 {path.length > 0 && (
                     <>
-                        <h2 style={{ marginTop: 28 }}>🎯 Learning Path</h2>
-
+                        <h2 style={{ marginTop: 28 }}> Learning Path</h2>
                         <div
                             style={{
                                 display: "grid",
@@ -234,25 +243,29 @@ export default function Chat() {
                                         borderRadius: 12,
                                         padding: 14,
                                         border: "1px solid #e3e3e3",
-                                        boxShadow: "0 6px 14px rgba(0,0,0,.06)"
+                                        boxShadow: "0 6px 14px rgba(0,0,0,.06)",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        height: "100%"
                                     }}
                                 >
                                     <strong style={{ color: "#2563eb" }}>
-                                        🚀 Stage {i + 1}
+                                        Stage {i + 1}
                                     </strong>
-
-                                    <div style={{ marginTop: 6, lineHeight: 1.55 }}>
+                                            lineHeight: 1.55
+                                        }}
+                                    >
                                         {p}
                                     </div>
                                 </div>
-                            ))}
                         </div>
-                    </>
+            </>
+            
                 )}
 
                 {videos.length > 0 && (
                     <>
-                        <h2 style={{ marginTop: 28 }}>🎥 Video Resources</h2>
+                        <h2 style={{ marginTop: 28 }}> Video Resources</h2>
 
                         {videos.map((v, i) => (
                             <div
@@ -278,7 +291,6 @@ export default function Chat() {
                                         border: "1px solid #ddd"
                                     }}
                                 />
-
                                 <div style={{ marginTop: 8 }}>
                                     <strong>{v.title}</strong>
                                     <div style={{ fontSize: 12, color: "#666" }}>
@@ -293,7 +305,6 @@ export default function Chat() {
                 {mistakes.length > 0 && (
                     <>
                         <h2 style={{ marginTop: 28 }}>⚠️ Common Pitfalls</h2>
-
                         <div
                             style={{
                                 display: "grid",
@@ -370,7 +381,7 @@ export default function Chat() {
                             cursor: user ? "pointer" : "not-allowed"
                         }}
                     >
-                        ✔ Accept & Save to My Learning Plans
+                        Accept & Save to My Learning Plans
                     </button>
                 )}
             </div>
