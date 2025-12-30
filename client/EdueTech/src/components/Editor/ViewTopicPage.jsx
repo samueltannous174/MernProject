@@ -77,7 +77,7 @@ export default function ViewTopicPage() {
                     padding: 16,
                     borderRadius: 10,
                     border: "1px solid #ddd",
-                    background: "#fff",
+                    background: "#859eaaff",
                     lineHeight: 1.6
                 }}
             >

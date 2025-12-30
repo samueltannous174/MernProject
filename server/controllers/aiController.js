@@ -1,21 +1,21 @@
 const axios = require("axios");
 require("dotenv").config();
 
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
 exports.chat = async (req, res) => {
-    
   try {
     let { title, messages } = req.body;
 
+    let prompt = "";
+
+    // 🟢 Case 1: Topic-based roadmap
     if (title) {
-      messages = [
-        {
-          role: "system",
-          content:
-            "You are a programming tutor. Always produce clean structured roadmaps using Markdown headings and lists — never tables."
-        },
-        {
-          role: "user",
-          content: `
+      prompt = `
+You are a programming tutor. Always produce clean structured roadmaps using Markdown headings and lists — never tables.
+
 Generate a learning roadmap for this programming topic:
 
 Topic: ${title}
@@ -74,43 +74,40 @@ REQUIRED OUTPUT FORMAT
    - Code example:
    \`\`\`js
    \`\`\`
-`
-        }
-      ];
+`;
     }
 
-    if (!messages || !Array.isArray(messages)) {
+    else if (Array.isArray(messages)) {
+      prompt = messages.map(m => m.content).join("\n");
+    }
+
+    else {
       return res.status(400).json({
-        error: "Request must include either topic or messages[]"
+        error: "Request must include either title or messages[]"
       });
     }
 
-    const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        model: "tngtech/deepseek-r1t2-chimera:free",
-        messages
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json"
-        }
-      }
-      );
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3-flash-preview"
+    });
 
-const result = response.data;
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
 
-console.log("🟢 Model Output:\n", result?.choices?.[0]?.message?.content);
+    console.log("🟢 Gemini Output:\n", text);
 
-      
+    res.json({
+      content: text
+    });
 
-    res.json(response.data);
   } catch (err) {
-    console.error(err.response?.data || err);
-    res.status(500).json({ error: "OpenRouter request failed" });
+    console.error(err);
+    res.status(500).json({
+      error: "Gemini request failed"
+    });
   }
 };
+
 
 
 const AiTopic = require("../models/AiTopic");
