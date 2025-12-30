@@ -71,7 +71,7 @@ export default function AuthForm() {
         loginUser(res.data.user, res.data.token);
       }
       if (res.data.role === "admin") {
-        navigate("/");
+        navigate("/topics");
       } else {
         navigate("/dashboard");
       }
