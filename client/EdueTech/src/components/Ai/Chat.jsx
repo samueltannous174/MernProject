@@ -12,16 +12,25 @@ export default function Chat() {
     const [mistakes, setMistakes] = useState([]);
     const [mainImage, setMainImage] = useState("");
     const [loading, setLoading] = useState(false);
- 
+
     const { user, token } = useContext(UserContext);
     const navigate = useNavigate();
- 
+
     const extractMainImage = (text) => {
-        const section = text.split("🖼")[1] || "";
-        const url = section.split("\n")[1]?.trim();
-        return url?.startsWith("http") ? url : "";
+        const sectionMatch = text.match(/🖼[\s\S]*?\n(https?:\/\/\S+)/);
+        if (!sectionMatch) return "";
+
+        const url = sectionMatch[1].trim();
+        if (!url.startsWith("http")) return "";
+
+        return url;
     };
+<<<<<<< HEAD
+
+
+=======
  
+>>>>>>> main
     const extractLearningPath = (text) => {
         let section = text.split("🎯 Learning Path")[1] || "";
         section = section.split("🎥")[0];
@@ -31,6 +40,21 @@ export default function Chat() {
             .map((s) => s.trim())
             .slice(0, 5);
     };
+<<<<<<< HEAD
+
+    const extractVideoBlocks = (text) => {
+        const lines = text.split("\n");
+        const results = [];
+
+        for (let line of lines) {
+            const match = line.match(/Stage\s+\d+\s+—\s+(.*?)\s+—\s+(https?:\/\/\S+)/);
+            if (!match) continue;
+
+            const title = match[1].trim();
+            let url = match[2].trim().replace(/[>\)\]]+$/, "").replace(/[\u200B-\u200D\uFEFF]/g, "");
+            let videoId = "";
+
+=======
  
     const extractVideoBlocks = (text) => {
         const lines = text.split("\n");
@@ -44,11 +68,22 @@ export default function Chat() {
             let url = match[2].trim().replace(/[>\)\]]+$/, "").replace(/[\u200B-\u200D\uFEFF]/g, "");
             let videoId = "";
  
+>>>>>>> main
             if (url.includes("watch?v=")) {
                 videoId = url.split("watch?v=")[1].split("&")[0];
             } else if (url.includes("youtu.be/")) {
                 videoId = url.split("youtu.be/")[1].split(/[?\s]/)[0];
             }
+<<<<<<< HEAD
+
+            if (!videoId) continue;
+            results.push({ title, url, embed: `https://www.youtube.com/embed/${videoId}` });
+        }
+
+        return results.slice(0, 5);
+    };
+
+=======
  
             if (!videoId) continue;
             results.push({ title, url, embed: `https://www.youtube.com/embed/${videoId}` });
@@ -57,18 +92,27 @@ export default function Chat() {
         return results.slice(0, 5);
     };
  
+>>>>>>> main
     const extractMistakeBlocks = (text) => {
         const section = text.split("⚠️ 5 Common Mistakes")[1] || "";
         const items = section.split(/\n\d\)/).slice(1);
         return items.slice(0, 5).map((b) => b.trim());
     };
+<<<<<<< HEAD
+
+=======
  
+>>>>>>> main
     const sendMessage = async () => {
         if (!title.trim()) {
             setReply("Please enter a topic first.");
             return;
         }
+<<<<<<< HEAD
+
+=======
  
+>>>>>>> main
         try {
             setLoading(true);
             setReply("");
@@ -76,10 +120,17 @@ export default function Chat() {
             setMistakes([]);
             setPath([]);
             setMainImage("");
+<<<<<<< HEAD
+
+            const res = await axios.post("http://localhost:8000/chat", { title });
+            const text = res.data?.content || "(no response from model)";
+
+=======
  
             const res = await axios.post("http://localhost:8000/chat", { title });
             const text = res.data?.content || "(no response from model)";
  
+>>>>>>> main
             setReply(text);
             setPath(extractLearningPath(text));
             setVideos(extractVideoBlocks(text));
@@ -92,10 +143,17 @@ export default function Chat() {
             setLoading(false);
         }
     };
+<<<<<<< HEAD
+
+    const saveToDatabase = async () => {
+        if (!user) return alert("You must be logged in to save");
+
+=======
  
     const saveToDatabase = async () => {
         if (!user) return alert("You must be logged in to save");
  
+>>>>>>> main
         try {
             const payload = {
                 user: user.id,
@@ -105,18 +163,30 @@ export default function Chat() {
                 videos,
                 mistakes,
             };
+<<<<<<< HEAD
+
+            await axios.post("http://localhost:8000/createAiTopic", payload, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+=======
  
             await axios.post("http://localhost:8000/createAiTopic", payload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
  
+>>>>>>> main
             navigate("/my-topics");
         } catch (err) {
             console.error(err);
             navigate("/my-topics");
         }
     };
+<<<<<<< HEAD
+
+=======
  
+>>>>>>> main
     return (
         <div style={{ maxWidth: 1200, margin: "40px auto", fontFamily: "Segoe UI, Arial" }}>
             <h1 style={{ marginBottom: 6, color: "white", fontSize: 40 }}>AI Programming Tutor</h1>
@@ -164,11 +234,21 @@ export default function Chat() {
                 >
                     {loading ? "Generating…" : "Generate Learning Plan"}
                 </button>
+<<<<<<< HEAD
+
+                <div style={{ marginTop: 20, background: "#f7f7f7", padding: 18, borderRadius: 12, lineHeight: 1.65 }}>
+                    {/* <ReactMarkdown>{reply}</ReactMarkdown> */}
+                </div>
+
+
+
+=======
  
                 <div style={{ marginTop: 20, background: "#f7f7f7", padding: 18, borderRadius: 12, lineHeight: 1.65 }}>
                     <ReactMarkdown>{reply}</ReactMarkdown>
                 </div>
  
+>>>>>>> main
                 {mainImage && (
                     <div style={{ marginTop: 20 }}>
                         <img

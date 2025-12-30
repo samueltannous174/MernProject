@@ -31,7 +31,7 @@ export default function App() {
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-gray-900 ">      
+      <div className="min-h-screen flex flex-col min-h-screen flex flex-col bg-[linear-gradient(to_bottom,#07101d,#96cfef)]  ">      
 <NavBar user={user} />
 
 

@@ -7,29 +7,37 @@ import TopicGrid from "./TopicGrid";
 export default function UserTopics() {
 
     const { user } = useContext(UserContext);
+
     const [myTopics, setMyTopics] = useState([]);
     const [enrolledTopics, setEnrolledTopics] = useState([]);
+
     const [loading, setLoading] = useState(true);
-    console.log(myTopics);
+
     useEffect(() => {
         if (!user) return;
+
         const fetchData = async () => {
             try {
                 const myRes = await axios.get(
                     `http://localhost:8000/userAiTopics/${user.id}`
                 );
+
                 const enrolledRes = await axios.get(
                     `http://localhost:8000/getTopicsForUser/${user.id}`
                 );
+
                 setMyTopics(myRes.data);
                 setEnrolledTopics(enrolledRes.data);
+
             } catch (err) {
                 console.error("Failed to load topics:", err);
             } finally {
                 setLoading(false);
             }
         };
+
         fetchData();
+
     }, [user]);
     if (!user) return <h2>Please login to view your topics</h2>;
     if (loading) return <h3 >Loading…</h3>;
