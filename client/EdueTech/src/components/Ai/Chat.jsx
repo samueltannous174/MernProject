@@ -1,11 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
-import { useContext } from "react";
 import { UserContext } from "../../context/context";
-
-
 import ReactMarkdown from "react-markdown";
-
 
 export default function Chat() {
     const [title, setTitle] = useState("");
@@ -14,23 +10,17 @@ export default function Chat() {
     const [path, setPath] = useState([]);
     const [videos, setVideos] = useState([]);
     const [mistakes, setMistakes] = useState([]);
+
     const { user, token } = useContext(UserContext);
+
     const [loading, setLoading] = useState(false);
     const [mainImage, setMainImage] = useState("");
 
-
     const extractMainImage = (text) => {
         const section = text.split("🖼")[1] || "";
-        const url = section
-            .split("\n")[1]
-            ?.trim();
-
+        const url = section.split("\n")[1]?.trim();
         return url?.startsWith("http") ? url : "";
     };
-
-
-
-
 
     const saveToDatabase = async () => {
         if (!user) {
@@ -40,7 +30,7 @@ export default function Chat() {
 
         try {
             const payload = {
-                user: user.id,  
+                user: user.id,
                 title,
                 mainImage,
                 learningPath: path,
@@ -48,50 +38,44 @@ export default function Chat() {
                 mistakes,
             };
 
-            const res = await axios.post(
+            await axios.post(
                 "http://localhost:8000/createAiTopic",
                 payload,
                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+                    headers: { Authorization: `Bearer ${token}` }
                 }
             );
-
-            alert("Saved successfully 🎉");
-
+            
+            navigate("/my-topics");
         } catch (err) {
             console.error(err);
-            alert("Failed to save");
+            navigate("/my-topics");
+
         }
     };
 
-
     const extractLearningPath = (text) => {
         let section = text.split("🎯 Learning Path")[1] || "";
-
         section = section.split("🎥")[0];
 
         return section
-            .split(/\n\d\)/)   
+            .split(/\n\d\)/)
             .slice(1)
             .map(s => s.trim())
             .slice(0, 5);
     };
-
-
 
     const extractVideoBlocks = (text) => {
         const lines = text.split("\n");
         const results = [];
 
         for (let line of lines) {
+            const match =
+                line.match(/Stage\s+\d+\s+—\s+(.*?)\s+—\s+(https?:\/\/\S+)/);
 
-            const match = line.match(/Stage\s+\d+\s+—\s+(.*?)\s+—\s+(https?:\/\/\S+)/);
             if (!match) continue;
 
             const title = match[1].trim();
-
             let url = match[2]
                 .trim()
                 .replace(/[>\)\]]+$/, "")
@@ -108,7 +92,6 @@ export default function Chat() {
             if (!videoId) continue;
 
             const embed = `https://www.youtube.com/embed/${videoId}`;
-
             results.push({ title, url, embed });
         }
 
@@ -135,11 +118,12 @@ export default function Chat() {
             setPath([]);
             setMainImage("");
 
-            const res = await axios.post("http://localhost:8000/chat", { title });
+            const res = await axios.post(
+                "http://localhost:8000/chat",
+                { title }
+            );
 
-            const text =
-                res.data?.choices?.[0]?.message?.content ||
-                "(no response from model)";
+            const text = res.data?.content || "(no response from model)";
 
             setReply(text);
             setPath(extractLearningPath(text));
@@ -163,9 +147,11 @@ export default function Chat() {
                 fontFamily: "Segoe UI, Arial"
             }}
         >
-            <h1 style={{ marginBottom: 6 ,color: "white" , fontSize: 40 }}>AI Programming Tutor</h1>
+            <h1 style={{ marginBottom: 6, color: "white", fontSize: 40 }}>
+                AI Programming Tutor
+            </h1>
 
-            <p style={{ color: "white" ,fontSize: 20 ,fontFamily: "Segoe UI, Arial"}}>
+            <p style={{ color: "white", fontSize: 20 }}>
                 Generates a structured learning path + videos + common mistakes guide
             </p>
 
@@ -175,8 +161,7 @@ export default function Chat() {
                     borderRadius: 14,
                     padding: 20,
                     boxShadow: "0 10px 24px rgba(0,0,0,.08)",
-                    margin: "40px 0",
-                    height: "500px"
+                    margin: "40px 0"
                 }}
             >
                 <input
@@ -186,13 +171,11 @@ export default function Chat() {
                     style={{
                         width: "100%",
                         padding: 12,
-                        fontSize: 16,
+                        fontSize: 20,
                         borderRadius: 8,
+                        background: "#fff",
                         border: "1px solid #ccc",
-                        color: "#333",
-                        fontSize: 20
-                        
-
+                        color: "#333"
                     }}
                 />
 
@@ -200,15 +183,14 @@ export default function Chat() {
                     onClick={sendMessage}
                     disabled={loading}
                     style={{
-                        marginTop: 10,
+                        marginTop: 50,
                         padding: "10px 18px",
                         fontSize: 20,
                         borderRadius: 8,
                         border: "none",
                         background: "linear-gradient(to right, #3B82F6, #86EFAC)",
                         color: "white",
-                        cursor: "pointer",
-                        marginTop: 50
+                        cursor: "pointer"
                     }}
                 >
                     {loading ? "Generating…" : "Generate Learning Plan"}
@@ -241,14 +223,14 @@ export default function Chat() {
                     </div>
                 )}
 
-
                 {path.length > 0 && (
                     <>
                         <h2 style={{ marginTop: 28 }}> Learning Path</h2>
                         <div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+                                gridTemplateColumns:
+                                    "repeat(auto-fill, minmax(260px, 1fr))",
                                 gap: 18,
                                 marginTop: 10
                             }}
@@ -270,19 +252,15 @@ export default function Chat() {
                                     <strong style={{ color: "#2563eb" }}>
                                         Stage {i + 1}
                                     </strong>
-                                    <div
-                                        style={{
-                                            marginTop: 6,
-                                            overflowWrap: "anywhere",
                                             lineHeight: 1.55
                                         }}
                                     >
                                         {p}
                                     </div>
                                 </div>
-                            ))}
                         </div>
-                    </>
+            </>
+            
                 )}
 
                 {videos.length > 0 && (
@@ -297,8 +275,8 @@ export default function Chat() {
                                     borderRadius: 12,
                                     padding: 14,
                                     marginTop: 12,
-                                    boxShadow: "0 6px 16px rgba(0,0,0,.08)",
-                                    border: "1px solid #e5e5e5"
+                                    border: "1px solid #e5e5e5",
+                                    boxShadow: "0 6px 16px rgba(0,0,0,.08)"
                                 }}
                             >
                                 <iframe
@@ -315,7 +293,9 @@ export default function Chat() {
                                 />
                                 <div style={{ marginTop: 8 }}>
                                     <strong>{v.title}</strong>
-                                    <div style={{ fontSize: 12, color: "#666" }}>{v.url}</div>
+                                    <div style={{ fontSize: 12, color: "#666" }}>
+                                        {v.url}
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -328,7 +308,8 @@ export default function Chat() {
                         <div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+                                gridTemplateColumns:
+                                    "repeat(auto-fill, minmax(260px, 1fr))",
                                 gap: 18,
                                 marginTop: 10
                             }}
@@ -341,54 +322,44 @@ export default function Chat() {
                                         borderRadius: 12,
                                         padding: 14,
                                         border: "1px solid #e3e3e3",
-                                        boxShadow: "0 6px 14px rgba(0,0,0,.06)",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        height: "100%"
+                                        boxShadow: "0 6px 14px rgba(0,0,0,.06)"
                                     }}
                                 >
-                                    <strong style={{ color: "#c62828", marginBottom: 6 }}>
+                                    <strong
+                                        style={{ color: "#c62828", marginBottom: 6 }}
+                                    >
                                         ⚠️ Mistake {i + 1}
                                     </strong>
 
-                                    <div
-                                        style={{
-                                            overflowWrap: "anywhere",
-                                            lineHeight: 1.55
+                                    <ReactMarkdown
+                                        components={{
+                                            pre: (props) => (
+                                                <pre
+                                                    style={{
+                                                        background:
+                                                            "linear-gradient(to left,#e9ecf0,#96cfef)",
+                                                        padding: "10px",
+                                                        borderRadius: 8,
+                                                        whiteSpace: "pre-wrap"
+                                                    }}
+                                                    {...props}
+                                                />
+                                            ),
+                                            code: (props) => (
+                                                <code
+                                                    style={{
+                                                        background:
+                                                            "linear-gradient(to left,#e9ecf0,#96cfef)",
+                                                        padding: "2px 4px",
+                                                        borderRadius: 6
+                                                    }}
+                                                    {...props}
+                                                />
+                                            )
                                         }}
                                     >
-                                        <ReactMarkdown
-                                            components={{
-                                                pre: ({ node, ...props }) => (
-                                                    <pre
-                                                        style={{
-                                                            background: "#f4f4f4",
-                                                            padding: "10px",
-                                                            borderRadius: 8,
-                                                            whiteSpace: "pre-wrap",
-                                                            wordBreak: "break-word",
-                                                            overflowX: "visible",
-                                                            marginTop: 8
-                                                        }}
-                                                        {...props}
-                                                    />
-                                                ),
-                                                code: ({ node, ...props }) => (
-                                                    <code
-                                                        style={{
-                                                            background: "#eee",
-                                                            padding: "2px 4px",
-                                                            borderRadius: 6,
-                                                            wordBreak: "break-word"
-                                                        }}
-                                                        {...props}
-                                                    />
-                                                )
-                                            }}
-                                        >
-                                            {m}
-                                        </ReactMarkdown>
-                                    </div>
+                                        {m}
+                                    </ReactMarkdown>
                                 </div>
                             ))}
                         </div>
